@@ -1,7 +1,8 @@
 from datetime import date, datetime, timedelta, timezone
 
-from bson import ObjectId
 from fastapi import HTTPException
+
+from app.core.ids import ObjectId
 
 IST = timezone(timedelta(hours=5, minutes=30))
 

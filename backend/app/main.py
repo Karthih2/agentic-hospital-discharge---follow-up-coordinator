@@ -14,6 +14,7 @@ from app.modules.admin import router as admin
 from app.modules.auth import router as auth
 from app.modules.hubs import router as hubs
 from app.modules.notifications import router as notifications
+from app.modules.plans import router as plans
 from app.modules.providers import router as providers
 from app.modules.review import router as review
 from app.modules.summaries import router as summaries
@@ -30,7 +31,7 @@ async def lifespan(app: FastAPI):
         try:
             await init_db()
         except Exception:
-            log.warning("Database initialization failed; starting API in degraded mode until MongoDB is reachable.",
+            log.warning("Database initialization failed; starting API in degraded mode until the SQLite file is reachable.",
                         exc_info=True)
         else:
             loop = asyncio.create_task(jobs.run_loop())  # reminders, missed-task alerts, review aging (leased, idempotent)
@@ -71,7 +72,7 @@ async def unhandled(request: Request, exc: Exception):
     return JSONResponse({"detail": "Something went wrong"}, status_code=500)
 
 
-for r in (auth, hubs, summaries, tasks, providers, review, admin, notifications):
+for r in (auth, hubs, summaries, tasks, providers, review, plans, admin, notifications):
     app.include_router(r.router)
 
 

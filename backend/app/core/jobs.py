@@ -8,7 +8,7 @@ import os
 import socket
 from datetime import timedelta
 
-from pymongo.errors import DuplicateKeyError
+from app.core.store import DuplicateKeyError
 
 from app.core.audit import audit
 from app.core.db import get_db
@@ -39,7 +39,7 @@ async def missed_task_check() -> int:
     """Pending tasks past their due date alert the hub manager once (only if their consent allows it)."""
     db, n = get_db(), 0
     async for t in db.tasks.find({"status": "Pending", "due_date": {"$lt": d2dt(today_ist())},
-                                  "missed_notified_at": None}):
+                                  "missed_notified_at": None, "published": {"$ne": False}}):
         claim = await db.tasks.update_one({"_id": t["_id"], "missed_notified_at": None},
                                           {"$set": {"missed_notified_at": now()}})
         if not claim.modified_count:
@@ -51,7 +51,8 @@ async def missed_task_check() -> int:
 
 
 async def review_aging_check() -> int:
-    return await review_router.aging_check()
+    from app.pipeline import doctor_match
+    return await doctor_match.plan_aging_check() + await review_router.aging_check()
 
 
 async def cleanup() -> int:
@@ -71,7 +72,7 @@ async def suspicious_activity_check() -> int:
         recent = await audit_mod.events({"action": "alert_suspicious", "target_id": actor,
                                          "ts": {"$gte": since}}, limit=1)
         if not recent:
-            await audit("system", "alert_suspicious", "user", actor if not isinstance(actor, str) else None,
+            await audit("system", "alert_suspicious", "user", actor if actor != "system" else None,
                         result="error", meta={"denied_in_15min": c})
     return len(hits)
 

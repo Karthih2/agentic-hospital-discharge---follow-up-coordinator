@@ -25,4 +25,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export const useAuth = () => useContext(AuthCtx);
 
 export const homeFor = (role: Me["role"]) =>
-  ({ patient: "/hub", family: "/hub", doctor: "/doctor", admin: "/admin/overview" })[role];
+  ({ patient: "/hub", family: "/hub", doctor: "/doctor/plans", admin: "/admin/overview" })[role];

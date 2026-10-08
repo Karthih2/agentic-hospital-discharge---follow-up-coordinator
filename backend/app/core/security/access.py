@@ -1,8 +1,8 @@
 """Authentication dependency, role guard and the ONE shared access check (SECURITY.md 5.3).
-Consent lives in MongoDB (`consents` + `hub_members`) and is read on every request, so a revoke is immediate."""
+Consent lives in the database (`consents` + `hub_members`) and is read on every request, so a revoke is immediate."""
 from dataclasses import dataclass
 
-from bson import ObjectId
+from app.core.ids import ObjectId
 from fastapi import Depends, HTTPException, Request
 
 from app.core.audit import audit

@@ -14,7 +14,7 @@ React + Vite + Tailwind CSS, react-router, motion, React Bits text and scroll co
 
 - Patients after a hospital stay, including elderly patients whose family member operates the account. They need to know what to do next and when.
 - Family members who view the plan within the access the patient granted, and receive reminders.
-- Doctor reviewers who resolve the items the system could not settle.
+- Doctor reviewers who review, edit and publish each new plan, and resolve the items the system could not settle.
 - Hospital management who assign reviewers and handle callback requests, without seeing clinical text.
 
 ## Product Purpose
@@ -35,7 +35,8 @@ Input is a pasted or uploaded synthetic discharge summary. Six languages: Englis
 - Statuses: Pending (blue), Completed (green), Needs Review (orange, locked).
 - Medicine cards use a fixed template, never reworded.
 - Synthetic data only. No real patient, provider or clinical data.
-- Backend endpoints exist for auth, family, summaries, tasks, providers, review, management, notifications.
+- Backend endpoints exist for auth, family, summaries, tasks, providers, review, plans, management, notifications.
+- Every plan is a draft for its matched doctor (attending physician first, fallback chain if unavailable). The patient and family see it only after the doctor reviews, edits and publishes it.
 
 ## Brand Commitments
 
@@ -45,7 +46,7 @@ Input is a pasted or uploaded synthetic discharge summary. Six languages: Englis
 
 ## Evidence on Hand
 
-- Working backend with 79 passing tests, live Groq model extraction on the PRD sample.
+- Working backend with 154 passing tests on SQLite, live Groq model extraction on the PRD sample, and a rule-based reader that builds every plan when no model is available.
 - Synthetic sample summaries in `backend/sample_data/`.
 - No customers, testimonials, benchmarks or pricing exist. None may be invented.
 

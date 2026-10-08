@@ -32,11 +32,14 @@ export type Task = {
   reminder_enabled?: boolean;
   callback_completed?: boolean;
   can_listen?: boolean;
+  doctor_edited?: boolean;
 };
 
 export type SummaryRow = {
   id: string; uploaded_at: string; status: string; error_code: string | null;
   counts: Record<Status, number>;
+  /** draft until the matched doctor reviews and publishes the plan */
+  plan_status?: "generating" | "draft" | "published" | null; doctor_name?: string | null; published_at?: string | null;
 };
 
 export type SummaryView = {

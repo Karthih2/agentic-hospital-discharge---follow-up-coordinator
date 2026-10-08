@@ -8,6 +8,7 @@ import { api, errText } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { useI18n } from "../../lib/i18n";
 import { fmtDate, TYPE_ICON, TYPE_LABEL, type Hub, type SummaryRow, type SummaryView, type Task } from "../../lib/types";
+import PlanReviewNotice from "./PlanReviewNotice";
 
 const HL: Record<string, string> = { blue: "#2f6fde", yellow: "#c98a10", red: "#c23b36", gray: "#9aa7b2" };
 const HEADER_LABEL: Record<string, string> = { admission_date: "Date of Admission", attending_physician: "Attending Physician", pcp: "PCP", disposition: "Discharge Disposition" };
@@ -175,7 +176,7 @@ export default function Plan() {
   const tasks = useQuery({ queryKey: ["tasks", pid], queryFn: () => api<Task[]>(`/patients/${pid}/tasks`) });
   const fullAccess = isSelf || card?.access === "full";
   const list = useQuery({ queryKey: ["summaries", pid], queryFn: () => api<SummaryRow[]>(`/patients/${pid}/summaries`), enabled: canAct });
-  const sid = sp.get("summary") ?? list.data?.find((s) => s.status === "ready")?.id;
+  const sid = sp.get("summary") ?? list.data?.find((s) => s.status === "ready" && s.plan_status !== "draft")?.id;
   const original = useQuery({ queryKey: ["original", sid], queryFn: () => api<SummaryView>(`/summaries/${sid}`), enabled: fullAccess && !!sid, retry: false });
   const refresh = () => { void qc.invalidateQueries({ queryKey: ["tasks", pid] }); void qc.invalidateQueries({ queryKey: ["summaries", pid] }); void qc.invalidateQueries({ queryKey: ["hubs"] }); };
   const data = [...(tasks.data ?? [])].sort((a, b) => (a.due_date ?? "9999").localeCompare(b.due_date ?? "9999"));
@@ -194,6 +195,7 @@ export default function Plan() {
             {o.diagnoses && Object.entries(o.diagnoses).map(([k, v]) => v ? <div key={k} className="flex min-w-0 flex-wrap gap-x-2 sm:col-span-2"><dt className="text-ink-soft">{DX_LABEL[k]}:</dt><dd>{v}</dd></div> : null)}
           </dl>
         </section>)}
+      <PlanReviewNotice pid={pid} enabled={canAct} />
       <div className="mb-6 flex flex-wrap items-center gap-4">
         <Tabs label="View" tabs={[{ id: "card", label: "Card View" }, { id: "panel", label: "Two-Panel View" }, { id: "timeline", label: "Timeline" }]} value={view} onChange={setView} />
         {canAct && <span className="ml-auto flex flex-wrap gap-3"><Link className="btn btn-plain" to={`/hub/upload/${pid}`}><Icon name="upload" size={22} />Upload</Link><Link className="btn btn-plain" to={`/hub/manual/${pid}`}>Add a task by hand</Link></span>}

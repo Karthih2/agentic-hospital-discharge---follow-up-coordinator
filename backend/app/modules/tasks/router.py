@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
 
-from app.core.constants import LANGS
+from app.core.constants import LANGS, PUBLISHED
 from app.core.db import get_db
 from app.models.schemas import FlagIn, ManualTaskIn, ProviderSelectIn, ReminderIn
 from app.pipeline import planner, safety_gate
@@ -21,14 +21,14 @@ router = APIRouter(tags=["tasks"])
 
 async def load_task(task_id: str, user: Principal, action: str, request: Request):
     t = await get_db().tasks.find_one({"_id": oid(task_id)})
-    if not t:
+    if not t or t.get("published") is False:  # a draft plan does not exist for the patient until it is published
         raise HTTPException(404, "Not found")
     return t, await check_access(user, t["patient_id"], action, client_ip(request))
 
 
 async def _views(patient_id, view, lang, extra: dict | None = None) -> list[dict]:
     out = []
-    async for t in get_db().tasks.find({"patient_id": patient_id, **(extra or {})}).sort("due_date", 1):
+    async for t in get_db().tasks.find({"patient_id": patient_id, **PUBLISHED, **(extra or {})}).sort("due_date", 1):
         p = await public_task(t, view, lang)
         if p:
             out.append(p)
@@ -125,7 +125,7 @@ async def manual_entry(pid: str, body: ManualTaskIn, request: Request, user: Pri
             "source_line": "Manual entry: " + " | ".join(p for p in parts if p), "source_span": None}
     old = None
     if body.supersedes:
-        old = await db.tasks.find_one({"_id": oid(body.supersedes), "patient_id": patient_id})
+        old = await db.tasks.find_one({"_id": oid(body.supersedes), "patient_id": patient_id, **PUBLISHED})
         if not old:
             raise HTTPException(404, "Not found")
     flags = safety_gate.run_gate(item)

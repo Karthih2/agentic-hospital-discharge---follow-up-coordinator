@@ -439,8 +439,9 @@ def test_missed_task_alerts_go_to_the_hub_manager_only(clients, world):
     assert run(tasks_logic.missed_task_check()) >= 1
     run(tasks_logic.send_due_notifications())
     assert any(n["text"].startswith("A task was not completed") for n in clients["daughter1"].get("/me/notifications").json())
-    assert clients["son1"].get("/me/notifications").json() == []  # a viewer is not alerted
-    assert clients["brother1"].get("/me/notifications").json() == []
+    missed = lambda c: [n for n in c.get("/me/notifications").json() if n["type"] == "missed_task"]  # noqa: E731
+    assert missed(clients["son1"]) == []  # a viewer is not alerted
+    assert missed(clients["brother1"]) == []
     assert all("test" not in n["text"].lower() for n in clients["daughter1"].get("/me/notifications").json())
     assert run(tasks_logic.missed_task_check()) == 0  # one alert per task
 
@@ -532,13 +533,21 @@ def test_second_flag_is_rejected_not_duplicated(clients, world):
 
 
 def test_extraction_failure_placeholder_cannot_be_confirmed(clients, world, monkeypatch):
+    from app.pipeline import rule_extractor
+
     async def boom(raw):
         raise extraction_agent.AgentError("NO_API_KEY")
     monkeypatch.setattr(extraction_agent, "extract", boom)
+    monkeypatch.setattr(rule_extractor, "extract", lambda raw: Outcome())  # the fallback finds nothing either
     r = clients["patient1"].post(f"/patients/{world['patient']}/summaries", data={"text": SUMMARY})
-    assert clients["patient1"].get(f"/summaries/{r.json()['id']}/status").json()["status"] == "needs_manual"
-    rid = clients["doctor1"].get("/review/queue").json()[0]["id"]
-    assert clients["doctor1"].post(f"/review/{rid}/resolve", json={"outcome": "confirmed"}).status_code == 422
+    sid = r.json()["id"]
+    st = clients["patient1"].get(f"/summaries/{sid}/status").json()
+    assert st["status"] == "needs_manual" and st["plan_status"] == "draft"  # the doctor still gets the draft
+    plan = clients["doctor1"].get(f"/plans/{sid}").json()
+    t = plan["tasks"][0]
+    assert t["status"] == "Needs Review" and not t["can_confirm"]
+    assert clients["doctor1"].post(f"/plans/{sid}/tasks/{t['id']}/confirm").status_code == 422
+    assert clients["doctor1"].post(f"/review/{t['review_id']}/resolve", json={"outcome": "confirmed"}).status_code == 422
 
 
 def test_missing_translation_rejected():

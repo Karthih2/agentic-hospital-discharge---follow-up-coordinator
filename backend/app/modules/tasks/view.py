@@ -47,7 +47,7 @@ async def public_task(t: dict, view: View, lang: str) -> dict | None:
         "flags": t.get("flags", []), "confidence": t.get("confidence"),
         "provider_needed": t.get("provider_needed", False), "specialty": t.get("specialty"),
         "provider": provider, "provider_label": PROVIDER_LABEL if provider or t.get("provider_needed") else None,
-        "entry_mode": t.get("entry_mode"), "reminder_enabled": t.get("reminder_enabled", True), "completed_at": iso(t.get("completed_at")),
+        "entry_mode": t.get("entry_mode"), "doctor_edited": t.get("doctor_edited", False), "reminder_enabled": t.get("reminder_enabled", True), "completed_at": iso(t.get("completed_at")),
         "callback_completed": t.get("callback_completed_at") is not None,
         "can_listen": not locked and bool(display_text(t, lang) or card),
     }

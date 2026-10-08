@@ -14,7 +14,7 @@ from app.modules.auth import service as accounts
 from app.modules.hubs import service as hubs
 from app.pipeline import extraction_agent
 from app.pipeline.extraction_agent import MedicineFields, Outcome
-from tests.conftest import PW, SUMMARY, item, login, new_client, upload
+from tests.conftest import PW, SUMMARY, item, login, new_client, publish, upload
 
 run = asyncio.run
 
@@ -159,7 +159,7 @@ def test_guardian_consents_for_a_child_and_only_the_guardian(clients, world):
 
 
 async def make_oid(s):
-    from bson import ObjectId
+    from app.core.ids import ObjectId
     return ObjectId(s)
 
 
@@ -230,6 +230,7 @@ def test_two_patients_in_one_hub_never_mix(clients, world, monkeypatch):
     upload(clients["patient1"], pid)
     r = kabel.post(f"/patients/{kid}/summaries", data={"text": SUMMARY + "\nTab. Ramipril 5 mg once daily for 30 days after food.\nFollow up with orthopedic surgeon in 3 weeks.\n"})
     assert r.status_code == 202
+    publish(r.json()["id"])
 
     d = clients["daughter1"]
     asha = str(d.get(f"/patients/{pid}/tasks").json())
@@ -249,7 +250,7 @@ def test_two_patients_in_one_hub_never_mix(clients, world, monkeypatch):
     assert all(c["counts"] is None for c in son_home["patients"] if c["access"] == "none")
     # Kabel cannot see Asha, and a patient's reminders go only to people subscribed to that channel
     assert codes(kabel, "get", f"/patients/{pid}/tasks") == 403
-    kt = run(db().tasks.find_one({"patient_id": __import__("bson").ObjectId(kid), "type": "appointment"}))
+    kt = run(db().tasks.find_one({"patient_id": __import__("app.core.ids", fromlist=["ObjectId"]).ObjectId(kid), "type": "appointment"}))
     from app.modules.notifications import service as notify
     subs = run(notify.subscribers(kt["patient_id"], "appointment"))
     assert world["daughter"] in subs and world["son"] not in subs  # son1 has consent for Asha, not Kabel
@@ -284,7 +285,9 @@ def test_unavailable_doctor_review_routes_to_fallback_at_creation(clients, world
     upload(clients["patient1"], str(world["patient"]))
     rv = run(db().review_queue.find_one({}))
     assert rv["assigned_doctor_id"] == world["doctor2"]  # Dr. Jason's case: primary is out, the fallback takes it
-    assert rv["assignment_history"][0]["reason"] == "initial_fallback"
+    assert rv["assignment_history"][0]["reason"] == "plan_doctor"  # the item follows its plan to the fallback
+    s = run(db().discharge_summaries.find_one({}))
+    assert s["plan_doctor_id"] == world["doctor2"] and "fallback" in s["plan_match"]["reason"]
 
 
 def test_assignment_is_atomic_and_chain_cycles_are_safe(clients, world, plan):

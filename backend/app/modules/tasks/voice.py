@@ -2,7 +2,6 @@
 import hashlib
 
 import httpx
-from bson import Binary
 from fastapi import HTTPException
 
 from app.core.config import settings
@@ -47,5 +46,5 @@ async def audio_for(task: dict, lang: str) -> bytes:
     if r.status_code != 200:
         raise HTTPException(502, "Voice service failed")
     await db.audio_cache.update_one({"task_id": task["_id"], "lang": lang}, {"$set": {
-        "text_hash": h, "audio": Binary(enc_bytes(r.content)), "created_at": now()}}, upsert=True)
+        "text_hash": h, "audio": enc_bytes(r.content), "created_at": now()}}, upsert=True)
     return r.content

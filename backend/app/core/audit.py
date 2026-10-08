@@ -5,7 +5,7 @@ Inside a bucket every event carries the hash of the one before it, so an edited 
 import hashlib
 import json
 
-from pymongo.errors import DuplicateKeyError
+from app.core.store import DuplicateKeyError, matches
 
 from app.core.constants import SCHEMA_VERSION
 from app.core.db import get_db
@@ -30,7 +30,7 @@ async def audit(actor_id, action, target_type=None, target_id=None, result="ok",
     ts = now()
     ev = {"actor_id": actor_id, "on_behalf_of": on_behalf_of, "action": action, "target_type": target_type,
           "target_id": target_id, "result": result, "ip": ip, "meta": meta,
-          "ts": ts.replace(microsecond=ts.microsecond // 1000 * 1000)}  # Mongo keeps milliseconds
+          "ts": ts.replace(microsecond=ts.microsecond // 1000 * 1000)}  # stored to the millisecond
     key, day = str(actor_id), ts.strftime("%Y-%m-%d")
     for _ in range(6):  # optimistic: the push only lands if nobody else appended in between
         b = await coll.find_one({"actor_key": key, "day": day}, sort=[("seq", -1)])
@@ -53,11 +53,11 @@ async def audit(actor_id, action, target_type=None, target_id=None, result="ok",
 
 async def events(match: dict | None = None, limit: int = 200) -> list[dict]:
     """Newest first. `match` filters on event fields without the 'events.' prefix, e.g. {"action": "login"}."""
-    pipe = [{"$unwind": "$events"}, {"$replaceRoot": {"newRoot": "$events"}}]
-    if match:
-        pipe.append({"$match": match})
-    pipe += [{"$sort": {"ts": -1}}, {"$limit": limit}]
-    return [e async for e in get_db().audit_log.aggregate(pipe)]
+    out: list[dict] = []
+    async for b in get_db().audit_log.find({}):
+        out.extend(e for e in b["events"] if matches(e, match or {}))
+    out.sort(key=lambda e: e["ts"], reverse=True)
+    return out[:limit]
 
 
 async def verify_chain() -> bool:

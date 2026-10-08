@@ -14,6 +14,10 @@ ACCESS_LEVELS = ("full", "appointments", "reminders")
 HUB_ROLES = ("manager", "patient", "viewer")
 SCHEMA_VERSION = 2
 APPT_TYPES = ("appointment", "test", "referral")
+# Plan life cycle: the system builds a draft, the matched doctor reviews and edits it, then publishes it.
+# The patient and family see nothing of a plan until it is published.
+PLAN_STATUSES = ("generating", "draft", "published")
+PUBLISHED = {"published": {"$ne": False}}  # filter: tasks the patient and family may see
 
 REASON_TEXT = {
     "MISSING_DATE": "Date is missing",
@@ -117,3 +121,19 @@ _MORE = {
 }
 for _k, _v in _MORE.items():
     TEMPLATES[_k].update(_v)
+
+# Plan life cycle messages. Template text only, no clinical content.
+TEMPLATES["plan_ready"] = {
+    "en": "A new follow-up plan is ready for your review.",
+    "ta": "உங்கள் மதிப்பாய்வுக்காக ஒரு புதிய பின்தொடர் திட்டம் தயாராக உள்ளது.",
+    "hi": "आपकी समीक्षा के लिए एक नई फॉलो-अप योजना तैयार है।",
+    "te": "మీ సమీక్ష కోసం కొత్త ఫాలో-అప్ ప్లాన్ సిద్ధంగా ఉంది.",
+    "kn": "ನಿಮ್ಮ ಪರಿಶೀಲನೆಗಾಗಿ ಹೊಸ ಫಾಲೋ-ಅಪ್ ಯೋಜನೆ ಸಿದ್ಧವಾಗಿದೆ.",
+    "ml": "നിങ്ങളുടെ അവലോകനത്തിനായി ഒരു പുതിയ ഫോളോ-അപ്പ് പ്ലാൻ തയ്യാറാണ്."}
+TEMPLATES["plan_published"] = {
+    "en": "Your doctor has reviewed and published your follow-up plan. Open the app to view it.",
+    "ta": "உங்கள் மருத்துவர் உங்கள் பின்தொடர் திட்டத்தை சரிபார்த்து வெளியிட்டுள்ளார். பார்க்க ஆப்பைத் திறக்கவும்.",
+    "hi": "आपके डॉक्टर ने आपकी फॉलो-अप योजना की समीक्षा करके उसे जारी कर दिया है। देखने के लिए ऐप खोलें।",
+    "te": "మీ వైద్యుడు మీ ఫాలో-అప్ ప్లాన్‌ను సమీక్షించి ప్రచురించారు. చూడటానికి యాప్ తెరవండి.",
+    "kn": "ನಿಮ್ಮ ವೈದ್ಯರು ನಿಮ್ಮ ಫಾಲೋ-ಅಪ್ ಯೋಜನೆಯನ್ನು ಪರಿಶೀಲಿಸಿ ಪ್ರಕಟಿಸಿದ್ದಾರೆ. ನೋಡಲು ಆ್ಯಪ್ ತೆರೆಯಿರಿ.",
+    "ml": "നിങ്ങളുടെ ഡോക്ടർ നിങ്ങളുടെ ഫോളോ-അപ്പ് പ്ലാൻ പരിശോധിച്ച് പ്രസിദ്ധീകരിച്ചു. കാണാൻ ആപ്പ് തുറക്കുക."}

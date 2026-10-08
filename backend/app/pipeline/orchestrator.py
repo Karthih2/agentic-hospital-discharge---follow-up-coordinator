@@ -1,10 +1,14 @@
 """Orchestrator. A plain function that runs the steps in order and writes the status after every step.
-Any failure sets a visible status. Nothing stops silently."""
+Any failure sets a visible status. Nothing stops silently.
+
+Plan life cycle: the summary is matched to a doctor first, then the system ALWAYS builds a draft plan (the AI agent,
+or the rule-based extractor when the model is missing or fails). Draft tasks are `published: False`: the patient and
+family see nothing and no reminder is scheduled until the matched doctor reviews, edits and publishes the plan."""
 import re
 
 from app.core.config import settings
 from app.core.db import get_db
-from app.pipeline import dates, extraction_agent, planner, safety_gate, template
+from app.pipeline import dates, doctor_match, extraction_agent, planner, rule_extractor, safety_gate, template
 from app.pipeline.llm import AgentError
 from app.core.security.crypto import dec, enc, enc_map
 from app.modules.notifications import service as notify
@@ -57,9 +61,33 @@ async def _extraction_failed(db, s, raw, code, note):
     item = {"type": "care_instruction", "title": "Discharge summary could not be read",
             "source_line": raw[:300], "confidence": 0.0, "source_found": True}
     flags = [{"field": "item", "reason_code": "EXTRACTION_FAILED", "note": note}]
-    task = await planner.insert_task(s["patient_id"], s["_id"], item, flags)
+    task = await planner.insert_task(s["patient_id"], s["_id"], item, flags, published=False)
     await planner.create_review(task, flags, "system_failure")
-    await _set(db, s["_id"], "needs_manual", error_code=code)
+    # the doctor still gets the (empty) draft and can add every item by hand before publishing
+    await _set(db, s["_id"], "needs_manual", error_code=code, plan_status="draft")
+    await _notify_doctor(db, s["_id"])
+
+
+async def _notify_doctor(db, sid) -> None:
+    s = await db.discharge_summaries.find_one({"_id": sid}, {"plan_doctor_id": 1, "patient_id": 1})
+    if s and s.get("plan_doctor_id"):
+        await notify.add(s["plan_doctor_id"], s["patient_id"], "plan_ready", "plan_ready", sent=True)
+
+
+async def _extract(db, sid, raw):
+    """AI first; the rule-based extractor when the model is missing, fails, or finds nothing."""
+    t0 = now()
+    try:
+        out = await extraction_agent.extract(raw)
+        if out.items or out.rejected:
+            await _log(db, sid, "extract", True, f"model: {len(out.items)} items", t0)
+            return out, "model"
+        note = "model found nothing"
+    except (AgentError, ValueError) as e:
+        note = f"model unavailable: {str(e)[:60]}"
+    out = rule_extractor.extract(raw)
+    await _log(db, sid, "extract", bool(out.items), f"{note}; rules: {len(out.items)} items", t0)
+    return out, "rules"
 
 
 async def run(summary_id) -> None:
@@ -77,18 +105,17 @@ async def run(summary_id) -> None:
 async def _run(db, s):
     sid, raw = s["_id"], dec(s["raw_text"])
 
-    # 2. extraction (AI)
-    t0 = now()
+    # 1b. doctor matching (code): who owns this plan, decided before any task exists
+    tpl = template.parse(raw)
+    if s.get("plan_doctor_id") is None:
+        await doctor_match.assign_plan(s, tpl["header"])
+
+    # 2. extraction (AI, rule-based fallback)
     await _set(db, sid, "extracting")
-    try:
-        out = await extraction_agent.extract(raw)
-    except (AgentError, ValueError) as e:
-        await _log(db, sid, "extract", False, str(e)[:80], t0)
-        return await _extraction_failed(db, s, raw, "EXTRACTION_FAILED", "extraction failed")
+    out, method = await _extract(db, sid, raw)
+    await _set(db, sid, extraction_method=method)
     if not out.items and not out.rejected:
-        await _log(db, sid, "extract", False, "no items", t0)
         return await _extraction_failed(db, s, raw, "EXTRACTION_FAILED", "nothing found")
-    await _log(db, sid, "extract", True, f"{len(out.items)} items", t0)
 
     # 3+4. evidence and dates (code)
     discharge = dt2d(s.get("discharge_date")) or dates.parse_discharge_date(raw)
@@ -96,7 +123,6 @@ async def _run(db, s):
         discharge = dates.parse_absolute(out.discharge_date_text)
     await _set(db, sid, "gating", discharge_date=d2dt(discharge))
     items = [build_gate_item(i.model_dump(), raw, discharge) for i in out.items]
-    tpl = template.parse(raw)
     notices = [{"code": n["code"], "line": enc(n["line"])} for n in template.completeness(tpl["header"], items)]
     await _set(db, sid, header=enc_map(tpl["header"]), diagnoses=enc_map(tpl["diagnoses"]), notices=notices)
 
@@ -128,7 +154,7 @@ async def _run(db, s):
     await _set(db, sid, "planning")
     tasks = []
     for it, flags in gated:
-        t = await planner.insert_task(s["patient_id"], sid, it, flags)
+        t = await planner.insert_task(s["patient_id"], sid, it, flags, published=False)
         if flags:
             await planner.create_review(t, flags, "gate")
         tasks.append(t)
@@ -144,10 +170,8 @@ async def _run(db, s):
             note = await planner.finalize_clean(t, patient["language"])
             if note:
                 failures.append(note)
-    for t in tasks:  # reminders only for tasks that are still clean
-        fresh = await db.tasks.find_one({"_id": t["_id"]})
-        if fresh["status"] == "Pending":
-            await notify.schedule_reminders(fresh)
+    # no reminders yet: they are scheduled when the doctor publishes the plan
     await _log(db, sid, "simplify", not failures, "; ".join(failures)[:200], t0)
 
-    await _set(db, sid, "ready")
+    await _set(db, sid, "ready", plan_status="draft")
+    await _notify_doctor(db, sid)

@@ -3,6 +3,7 @@
     python -m scripts.verify_samples            OFFLINE: reference extraction -> real dates + real safety gate
     python -m scripts.verify_samples --live     LIVE: real model (Groq/Claude from .env) -> real dates + gate
     python -m scripts.verify_samples --live 03  only files whose name contains "03"
+    python -m scripts.verify_samples --rules    RULES: the no-AI fallback extractor -> real dates + gate
 
 OFFLINE proves the fixed rules (dates, evidence check, safety gate) give the expected status for every line.
 LIVE also proves the model extracts every actionable line, copies it exactly, and does not turn diagnoses or
@@ -113,6 +114,7 @@ def report(case: dict, raw: str, extracted: list[dict], live: bool, rejected: in
 
 async def main():
     live = "--live" in sys.argv
+    rules = "--rules" in sys.argv
     only = [a for a in sys.argv[1:] if not a.startswith("--")]
     cases = json.loads((DIR / "expected.json").read_text(encoding="utf-8"))
     total = 0
@@ -120,7 +122,10 @@ async def main():
         if only and not any(o in case["file"] for o in only):
             continue
         raw = (DIR / case["file"]).read_text(encoding="utf-8")
-        if live:
+        if rules:
+            from app.pipeline import rule_extractor
+            total += report(case, raw, [i.model_dump() for i in rule_extractor.extract(raw).items], True)
+        elif live:
             try:
                 items, rejected = await live_items(raw)
             except Exception as e:
@@ -132,7 +137,7 @@ async def main():
             for e in case["items"]:
                 assert find_span(e["source_line"], raw), f"source line missing from {case['file']}: {e['source_line']}"
             total += report(case, raw, reference_items(case), False)
-    print(f"\n{'ALL PASS' if not total else f'{total} failure(s)'} ({'live model' if live else 'offline, reference extraction'})")
+    print(f"\n{'ALL PASS' if not total else f'{total} failure(s)'} ({'rule-based extractor' if rules else 'live model' if live else 'offline, reference extraction'})")
     sys.exit(1 if total else 0)
 
 

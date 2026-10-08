@@ -2,7 +2,8 @@
 
     python -m scripts.seed_demo --reset            wipe the database, then build everything
     python -m scripts.seed_demo --reset --no-upload   people, hubs and providers only (no model calls)
-    python -m scripts.seed_demo --memory           same, on an in-memory database (when Atlas is not reachable)
+    python -m scripts.seed_demo --memory           same, on an in-memory database (nothing written to disk)
+    python -m scripts.seed_demo --reset --publish  also let each matched doctor publish their draft plan (demo shortcut)
 
 Creates the admin, 10 doctors, 4 patients, 3 family members, 2 hubs with consents, synthetic providers, and then
 uploads the 5 sample summaries THROUGH THE REAL API (as the patient, or the guardian for a child), so the real
@@ -75,10 +76,30 @@ async def upload_all(data: dict, ids: dict) -> list[dict]:
             st = r.json()
             sid = st["id"]
             status = (await c.get(f"/summaries/{sid}/status", headers={"Authorization": f"Bearer {token}"})).json()
-            rows.append({"file": fname, "patient": who, "uploaded_by": uploader, "http": r.status_code,
-                         "status": status["status"], "counts": status.get("counts")})
-            print(f"  {fname:42} {who:12} {status['status']:9} {status.get('counts')}")
+            rows.append({"file": fname, "patient": who, "uploaded_by": uploader, "http": r.status_code, "id": sid,
+                         "status": status["status"], "plan_status": status.get("plan_status"),
+                         "doctor": status.get("doctor_name")})
+            print(f"  {fname:42} {who:12} {status['status']:9} plan {status.get('plan_status')}, "
+                  f"review by {status.get('doctor_name')}")
     return rows
+
+
+async def publish_all(data: dict, rows: list[dict]) -> None:
+    """Demo shortcut: each matched doctor publishes their draft, keeping still-flagged items in review."""
+    db = get_db()
+    transport = httpx.ASGITransport(app=app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://demo", timeout=300) as c:
+        for row in rows:
+            s = await db.discharge_summaries.find_one({"_id": row["id"]})
+            if not s or s.get("plan_status") != "draft" or not s.get("plan_doctor_id"):
+                continue
+            u = await db.users.find_one({"_id": s["plan_doctor_id"]})
+            await c.post("/auth/login", json={"login": u["login"], "password": data["password"]})
+            token = c.cookies.get("access_token")
+            c.cookies.clear()
+            r = await c.post(f"/plans/{row['id']}/publish", json={"keep_in_review": True},
+                             headers={"Authorization": f"Bearer {token}"})
+            print(f"  published {row['file']:42} by {u['login']:12} -> {r.status_code}")
 
 
 def login_table(data: dict) -> None:
@@ -101,9 +122,9 @@ def login_table(data: dict) -> None:
 
 async def main() -> None:
     data = json.loads((DIR / "demo_people.json").read_text(encoding="utf-8"))
-    if "--memory" in sys.argv:  # no Atlas: an in-memory database, real model calls. Gone when the script ends.
-        from mongomock_motor import AsyncMongoMockClient
-        set_db(AsyncMongoMockClient(tz_aware=True)["demo"])
+    if "--memory" in sys.argv:  # an in-memory database, real model calls. Gone when the script ends.
+        from app.core.db import memory_db
+        set_db(memory_db())
     elif "--reset" in sys.argv:
         print("resetting database ...")
         await reset()
@@ -114,7 +135,9 @@ async def main() -> None:
     print("people, hubs, consents and providers created")
     if "--no-upload" not in sys.argv:
         print("uploading the 5 summaries through the API (real model, this takes a minute) ...")
-        await upload_all(data, ids)
+        rows = await upload_all(data, ids)
+        if "--publish" in sys.argv:
+            await publish_all(data, rows)
     login_table(data)
 
 

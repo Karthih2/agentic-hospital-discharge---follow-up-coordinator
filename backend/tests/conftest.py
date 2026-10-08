@@ -4,13 +4,12 @@ import os
 # Must be set before the app is imported. Environment beats .env, so tests never touch real databases.
 os.environ.update({
     "SKIP_INIT": "1", "JWT_SECRET": "t" * 48, "CLAUDE_API_KEY": "",
-    "FIELD_ENC_KEY": base64.b64encode(b"k" * 32).decode(), "MONGO_URI": "mongodb://unused"})
+    "FIELD_ENC_KEY": base64.b64encode(b"k" * 32).decode(), "SQLITE_PATH": ":memory:"})
 
 import asyncio  # noqa: E402
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
-from mongomock_motor import AsyncMongoMockClient  # noqa: E402
 
 from app.core import db as dbmod  # noqa: E402
 from app.main import app  # noqa: E402
@@ -51,7 +50,7 @@ def sample_outcome() -> Outcome:
 
 @pytest.fixture(autouse=True)
 def env(monkeypatch):
-    dbmod.set_db(AsyncMongoMockClient(tz_aware=True)["test"])
+    dbmod.set_db(dbmod.memory_db())  # fresh in-memory SQLite per test
     ratelimit.clear()
 
     async def fake_simplify(source_line, lang):
@@ -91,7 +90,30 @@ def clients(world):
     return out
 
 
-def upload(c, pid, text=SUMMARY):
+def doctor_client(summary_id) -> TestClient:
+    """A client logged in as the doctor the pipeline matched to this summary's plan."""
+    s = asyncio.run(dbmod.get_db().discharge_summaries.find_one({"_id": summary_id}))
+    assert s and s.get("plan_doctor_id"), "no doctor was matched to this plan"
+    u = asyncio.run(dbmod.get_db().users.find_one({"_id": s["plan_doctor_id"]}))
+    c = new_client()
+    login(c, u["login"])
+    return c
+
+
+def publish(summary_id, keep_in_review: bool = True):
+    """The matched doctor publishes the draft plan. keep_in_review=True keeps still-flagged items with the doctor,
+    so they show to the patient as 'Waiting for doctor review' (what most older tests exercise)."""
+    r = doctor_client(summary_id).post(f"/plans/{summary_id}/publish", json={"keep_in_review": keep_in_review})
+    assert r.status_code == 200, r.text
+    return r.json()
+
+
+def upload(c, pid, text=SUMMARY, publish_plan: bool = True):
     r = c.post(f"/patients/{pid}/summaries", data={"text": text})
     assert r.status_code == 202, r.text
-    return r.json()["id"]
+    sid = r.json()["id"]
+    if publish_plan and r.json().get("status") == "uploaded":
+        st = c.get(f"/summaries/{sid}/status").json()
+        if st.get("plan_status") == "draft":
+            publish(sid)
+    return sid

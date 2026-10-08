@@ -11,3 +11,12 @@ uploads_tmp/
 node_modules/
 dist/
 *.log
+
+# SQLite database files (backend/data/)
+backend/data/
+*.db
+*.db-wal
+*.db-shm
+
+# one-off local connection scripts
+test.py

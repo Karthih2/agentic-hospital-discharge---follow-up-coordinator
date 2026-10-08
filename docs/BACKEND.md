@@ -1,3 +1,5 @@
+> **Update (Oct 2026):** the backend now runs on **SQLite** (one file, `backend/data/discharge.db`). MongoDB, Neo4j, Redis and Celery are no longer used; read their mentions below as history. Plans are drafts for the matched doctor until published. Current details: `backend/README.md` and `docs/DATA_MODEL.md`.
+
 # Backend, Database and Application Flow
 
 **Project:** Agentic Hospital Discharge & Follow-up Coordinator

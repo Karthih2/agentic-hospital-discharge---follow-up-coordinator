@@ -4,7 +4,7 @@ from datetime import date
 from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Request, UploadFile
 
 from app.core.config import settings
-from app.core.constants import SCHEMA_VERSION, WAITING
+from app.core.constants import PUBLISHED, SCHEMA_VERSION, WAITING
 from app.core.db import get_db
 from app.pipeline import orchestrator
 from app.pipeline.reader import MESSAGES, InputError, check_text, read_upload
@@ -40,7 +40,10 @@ async def upload(pid: str, request: Request, background: BackgroundTasks,
     rec = {"patient_id": patient_id, "uploaded_by": user.id, "source": source,
            "raw_text": enc(raw), "text_hash": hashlib.sha256(raw.encode()).hexdigest() if raw else None,
            "discharge_date": d2dt(discharge_date), "status": "needs_manual" if error else "uploaded",
-           "error_code": error, "pipeline_log": [], "uploaded_at": now(), "schema_version": SCHEMA_VERSION}
+           "error_code": error, "pipeline_log": [], "uploaded_at": now(), "schema_version": SCHEMA_VERSION,
+           "plan_doctor_id": None, "published_at": None}
+    if not error:
+        rec["plan_status"] = "generating"  # draft until the matched doctor reviews and publishes it
     if not error:
         dup = await db.discharge_summaries.find_one(
             {"patient_id": patient_id, "text_hash": rec["text_hash"], "status": "ready"})
@@ -56,6 +59,16 @@ async def upload(pid: str, request: Request, background: BackgroundTasks,
     return {"id": sid(rec["_id"]), "status": "uploaded"}
 
 
+async def _plan_info(s: dict) -> dict:
+    """What the patient may know about a plan: its state and the reviewing doctor's name. Never task content."""
+    name = None
+    if s.get("plan_doctor_id"):
+        u = await get_db().users.find_one({"_id": s["plan_doctor_id"]}, {"name": 1})
+        name = dec(u["name"]) if u and u.get("name") else None
+    return {"plan_status": s.get("plan_status"), "doctor_name": name,
+            "published_at": s["published_at"].isoformat() if s.get("published_at") else None}
+
+
 @router.get("/patients/{pid}/summaries")
 async def list_summaries(pid: str, request: Request, user: Principal = Depends(current_user)):
     patient_id = oid(pid)
@@ -65,10 +78,10 @@ async def list_summaries(pid: str, request: Request, user: Principal = Depends(c
     proj = {"raw_text": 0, "pipeline_log": 0, "header": 0, "diagnoses": 0, "notices": 0}
     async for s in db.discharge_summaries.find({"patient_id": patient_id}, proj).sort("uploaded_at", -1).limit(50):
         counts = {"Pending": 0, "Completed": 0, "Needs Review": 0}
-        async for t in db.tasks.find({"summary_id": s["_id"]}, {"status": 1}):
+        async for t in db.tasks.find({"summary_id": s["_id"], **PUBLISHED}, {"status": 1}):
             counts[t["status"]] += 1
         out.append({"id": sid(s["_id"]), "uploaded_at": s["uploaded_at"].isoformat(), "status": s["status"],
-                    "error_code": s.get("error_code"), "counts": counts})
+                    "error_code": s.get("error_code"), "counts": counts, **await _plan_info(s)})
     await audit(view.actor, "list_summaries", "patient", patient_id, on_behalf_of=view.on_behalf_of, ip=client_ip(request))
     return out
 
@@ -87,9 +100,10 @@ async def status(summary_id: str, request: Request, user: Principal = Depends(cu
     db = get_db()
     counts = {}
     if s["status"] in ("ready", "needs_manual"):
-        counts = {"tasks": await db.tasks.count_documents({"summary_id": s["_id"]}),
-                  "needs_review": await db.tasks.count_documents({"summary_id": s["_id"], "status": "Needs Review"})}
-    return {"id": sid(s["_id"]), "status": s["status"], "error_code": s.get("error_code"),
+        counts = {"tasks": await db.tasks.count_documents({"summary_id": s["_id"], **PUBLISHED}),
+                  "needs_review": await db.tasks.count_documents({"summary_id": s["_id"], "status": "Needs Review",
+                                                                  **PUBLISHED})}
+    return {"id": sid(s["_id"]), "status": s["status"], "error_code": s.get("error_code"), **await _plan_info(s),
             "message": MESSAGES.get(s.get("error_code")), "counts": counts,
             "steps": [{"step": p["step"], "ok": p["ok"]} for p in s.get("pipeline_log", [])]}
 
@@ -129,7 +143,7 @@ def _redact(raw: str, spans: list[dict], locked: list[tuple[int, int]]):
 async def get_summary(summary_id: str, request: Request, user: Principal = Depends(current_user)):
     s, view = await _summary(summary_id, user, "view_original", request)
     raw, spans, locked = dec(s["raw_text"]), [], []
-    async for t in get_db().tasks.find({"summary_id": s["_id"]}):
+    async for t in get_db().tasks.find({"summary_id": s["_id"], **PUBLISHED}):  # a draft plan shows no highlights
         sp = t.get("source_span")
         if not sp:
             continue
@@ -145,7 +159,7 @@ async def get_summary(summary_id: str, request: Request, user: Principal = Depen
     colors = {"appointment": "blue", "test": "blue", "referral": "blue", "medicine": "yellow",
               "warning_sign": "red"}
     # "From your summary": shown verbatim, never explained. Diagnoses go to the patient (and the doctor) only.
-    return {"id": sid(s["_id"]), "raw_text": raw, "discharge_date": s["discharge_date"].date().isoformat()
+    return {"id": sid(s["_id"]), **await _plan_info(s), "raw_text": raw, "discharge_date": s["discharge_date"].date().isoformat()
             if s.get("discharge_date") else None,
             "header": dec_map(s.get("header") or {}),
             "diagnoses": None if view.family else dec_map(s.get("diagnoses") or {}),

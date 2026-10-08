@@ -3,6 +3,8 @@ import { AdminLogin } from "../features/admin/AdminLogin";
 import { AdminAudit, AdminDoctors, AdminHubs, AdminOverview, AdminRouting, AdminSystem } from "../features/admin/pages";
 import { AuthPage, LanguagePage, StartPage } from "../features/auth/Auth";
 import { DoctorPatients, DoctorQueue, ReviewDetail } from "../features/doctor/Doctor";
+import { DoctorPlans, PlanEditor } from "../features/doctor/Plans";
+import { AdminPlans } from "../features/admin/PlansAdmin";
 import { HubHome, Members, Notifications } from "../features/family-hub/FamilyHub";
 import { Upload } from "../features/family-hub/Upload";
 import Landing from "../features/landing/Landing";
@@ -48,6 +50,8 @@ export default function App() {
           <Route index element={<DoctorQueue />} />
           <Route path="review/:id" element={<ReviewDetail />} />
           <Route path="patients" element={<DoctorPatients />} />
+          <Route path="plans" element={<DoctorPlans />} />
+          <Route path="plans/:id" element={<PlanEditor />} />
         </Route>
       </Route>
 
@@ -56,6 +60,7 @@ export default function App() {
           <Route path="overview" element={<AdminOverview />} />
           <Route path="doctors" element={<AdminDoctors />} />
           <Route path="routing" element={<AdminRouting />} />
+          <Route path="plans" element={<AdminPlans />} />
           <Route path="hubs" element={<AdminHubs />} />
           <Route path="audit" element={<AdminAudit />} />
           <Route path="system" element={<AdminSystem />} />

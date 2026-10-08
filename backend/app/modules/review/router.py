@@ -35,7 +35,8 @@ async def queue(type: str | None = Query(None, max_length=30), sort: str = Query
                 user: Principal = Depends(doctor)):
     """Sort 'flagged' = newest first (date flagged); 'age' = oldest first. Built from the review's own snapshot."""
     db = get_db()
-    q = {"assigned_doctor_id": user.id, "status": {"$in": ["open", "in_review"]}}
+    # items of a draft plan are worked on in the plan editor (/plans); this queue holds published-plan items
+    q = {"assigned_doctor_id": user.id, "status": {"$in": ["open", "in_review"]}, "plan_draft": {"$ne": True}}
     if type:
         q["snapshot.task_type"] = type
     rows = [rv async for rv in db.review_queue.find(q).sort("created_at", 1 if sort == "age" else -1)]
@@ -161,11 +162,13 @@ async def resolve(review_id: str, body: ResolveIn, request: Request, user: Princ
     patient = await db.users.find_one({"_id": task["patient_id"]})
     await planner.finalize_clean(task, patient["language"], approved=True)
     fresh = await db.tasks.find_one({"_id": task["_id"]})
-    if fresh["status"] == "Pending":
+    published = fresh.get("published", True)
+    if fresh["status"] == "Pending" and published:  # a draft plan schedules nothing until it is published
         await notify.schedule_reminders(fresh)
     await stats.refresh(task["patient_id"])
-    await notify.add(task["patient_id"], task["patient_id"], "review_waiting", "review_resolved",
-                     task_id=task["_id"], sent=True)
+    if published:
+        await notify.add(task["patient_id"], task["patient_id"], "review_waiting", "review_resolved",
+                         task_id=task["_id"], sent=True)
     await audit(user.id, "resolve_review", "review", rv["_id"], ip=client_ip(request),
                 meta={"outcome": body.outcome})
     return {"status": "resolved", "task_status": fresh["status"]}

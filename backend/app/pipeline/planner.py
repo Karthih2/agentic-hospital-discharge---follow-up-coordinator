@@ -22,8 +22,9 @@ def provider_info(item: dict) -> tuple[bool, str | None]:
 
 
 async def insert_task(patient_id, summary_id, item: dict, flags: list[dict], entry_mode: str = "extracted",
-                      supersedes=None) -> dict:
-    """item is a gate item (see safety_gate). Status comes from the flags: clean -> Pending."""
+                      supersedes=None, published: bool = True) -> dict:
+    """item is a gate item (see safety_gate). Status comes from the flags: clean -> Pending.
+    published=False puts the task in a draft plan: invisible to the patient and family until the doctor publishes."""
     needed, spec = provider_info(item)
     ts = now()
     task = {
@@ -40,7 +41,8 @@ async def insert_task(patient_id, summary_id, item: dict, flags: list[dict], ent
         "flags": flags, "simple_text": None, "translations": {}, "medicine_card": None,
         "provider_id": None, "provider_needed": needed, "specialty": spec, "entry_mode": entry_mode,
         "supersedes": supersedes, "completed_at": None, "completed_by": None, "missed_notified_at": None,
-        "callback_completed_at": None, "created_at": ts, "updated_at": ts, "schema_version": SCHEMA_VERSION}
+        "callback_completed_at": None, "published": published, "doctor_edited": False,
+        "created_at": ts, "updated_at": ts, "schema_version": SCHEMA_VERSION}
     task["_id"] = (await get_db().tasks.insert_one(task)).inserted_id
     await stats.refresh(patient_id)
     return task
@@ -59,11 +61,14 @@ async def create_review(task: dict, flags: list[dict], raised_by: str, user_note
           "user_note": enc(user_note) if user_note else None,
           "raised_by": raised_by, "status": "open", "assigned_doctor_id": None, "fallback_doctor_ids": [],
           "assignment_history": [], "outcome": None, "corrected_values": None, "resolved_by": None,
-          "resolved_at": None, "created_at": ts, "schema_version": SCHEMA_VERSION}
+          "resolved_at": None, "created_at": ts, "schema_version": SCHEMA_VERSION,
+          # an item of a draft plan is handled in the doctor's plan editor, not in the general review queue
+          "plan_draft": not task.get("published", True)}
     rv["_id"] = (await db.review_queue.insert_one(rv)).inserted_id
     await review_router.assign(rv)
-    await notify.add(task["patient_id"], task["patient_id"], "review_waiting", "review_waiting",
-                     task_id=task["_id"], sent=True)
+    if task.get("published", True):  # the patient hears nothing about a plan that is not published yet
+        await notify.add(task["patient_id"], task["patient_id"], "review_waiting", "review_waiting",
+                         task_id=task["_id"], sent=True)
     return rv
 
 
@@ -81,8 +86,9 @@ async def flag_task(task: dict, flags: list[dict], raised_by: str, user_note: st
     return await create_review(task, flags, raised_by, user_note)
 
 
-async def finalize_clean(task: dict, patient_lang: str, approved: bool = False) -> str | None:
+async def finalize_clean(task: dict, patient_lang: str, approved: bool = False, text: str | None = None) -> str | None:
     """Make a clean task user-ready: medicine -> fixed card (no AI), others -> plain language + translation.
+    `text` overrides the source line as the wording to simplify (a doctor's edited instruction).
     Returns a short failure note if the rewrite could not be produced; the task stays usable either way."""
     db = get_db()
     if task["type"] == "medicine":
@@ -92,7 +98,7 @@ async def finalize_clean(task: dict, patient_lang: str, approved: bool = False) 
         await db.tasks.update_one({"_id": task["_id"]}, {"$set": {"medicine_card": enc_map(card)}})
         return None
     try:
-        simple, tr = await simplify(dec(task["source_line"]), patient_lang)
+        simple, tr = await simplify(text or dec(task["source_line"]), patient_lang)
     except RewriteRejected as e:
         if approved:  # a doctor approved it: keep it Pending, UI shows the source line
             return "rewrite_rejected_after_approval"

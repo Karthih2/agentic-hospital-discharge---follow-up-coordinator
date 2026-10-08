@@ -50,7 +50,9 @@ async def search(specialty: str, lat=None, lng=None, state=None, district=None, 
         if not loc:
             return []
         lng0, lat0 = loc["centre"]["coordinates"]
-        origin, query = (lat0, lng0), {"state": state, "district": district, "area": area}
+        # The chosen area is the starting point; providers across the same state are ranked by distance from it, so
+        # a small area still yields 3 to 5 suggestions (the nearest, usually inside the area itself, come first).
+        origin, query = (lat0, lng0), {"state": state}
     # ponytail: Python haversine over the filtered set. Switch to a $geoNear pipeline (2dsphere index exists) if providers reach thousands.
     found = []
     async for p in db.providers.find({**query, "synthetic": True}):

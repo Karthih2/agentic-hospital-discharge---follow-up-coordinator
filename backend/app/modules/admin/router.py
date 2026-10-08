@@ -51,7 +51,46 @@ async def overview(user: Principal = Depends(admin)):
             "summaries_today": await db.discharge_summaries.count_documents({"uploaded_at": {"$gte": start}}),
             "failures_today": await db.discharge_summaries.count_documents(
                 {"uploaded_at": {"$gte": start}, "status": {"$in": ["failed", "needs_manual"]}}),
-            "tasks": totals}
+            "tasks": totals,
+            "plans_waiting_for_doctor": await db.discharge_summaries.count_documents({"plan_status": "draft"}),
+            "plans_without_doctor": await db.discharge_summaries.count_documents(
+                {"plan_status": "draft", "plan_doctor_id": None})}
+
+
+@router.get("/plans")
+async def plans(status: str = Query("draft", pattern="^(draft|published|all)$"), user: Principal = Depends(admin)):
+    """Plan routing for the desk: who reviews which plan. Patient code and counts only, never clinical text."""
+    db = get_db()
+    q = {"plan_status": {"$in": ["draft", "published"]} if status == "all" else status}
+    rows = [s async for s in db.discharge_summaries.find(q, {"raw_text": 0, "header": 0, "diagnoses": 0,
+                                                              "notices": 0, "pipeline_log": 0}).sort("uploaded_at", 1)]
+    names = await _names({s.get("plan_doctor_id") for s in rows if s.get("plan_doctor_id")})
+    out = []
+    for s in rows:
+        p = await db.users.find_one({"_id": s["patient_id"]}, {"patient_code": 1})
+        out.append({"id": sid(s["_id"]), "patient_code": (p or {}).get("patient_code"), "plan_status": s["plan_status"],
+                    "doctor_id": sid(s.get("plan_doctor_id")), "doctor": names.get(s.get("plan_doctor_id")),
+                    "uploaded_at": iso(s["uploaded_at"]), "published_at": iso(s.get("published_at")),
+                    "age_hours": round(_age_h(s["uploaded_at"]), 1),
+                    "items": await db.tasks.count_documents({"summary_id": s["_id"]}),
+                    "flagged": await db.tasks.count_documents({"summary_id": s["_id"], "status": "Needs Review"})})
+    return out
+
+
+@router.post("/plans/{summary_id}/assign")
+async def assign_plan(summary_id: str, body: AssignIn, request: Request, user: Principal = Depends(admin)):
+    """Hand a draft plan, with its open review items, to another doctor."""
+    from app.pipeline import doctor_match
+    db = get_db()
+    s = await db.discharge_summaries.find_one({"_id": oid(summary_id)})
+    if not s or s.get("plan_status") != "draft":
+        raise HTTPException(409, "Only a draft plan can be reassigned")
+    doc = await db.doctors.find_one({"user_id": oid(body.doctor_id)})
+    if not doc:
+        raise HTTPException(404, "Not found")
+    if not await doctor_match.move_plan(s, doc["user_id"], "admin", actor=user.id):
+        raise HTTPException(409, "The plan changed, reload and try again")
+    return {"doctor_id": sid(doc["user_id"])}
 
 
 @router.get("/doctors")
@@ -90,13 +129,16 @@ async def availability(doctor_id: str, body: AvailabilityIn, request: Request, u
         except ValueError:
             raise HTTPException(422, "unavailable_until must be an ISO datetime")
     await db.doctors.update_one({"_id": d["_id"]}, {"$set": {"available": body.available, "unavailable_until": until}})
-    moved = 0
-    if not body.available or until:  # their open items move along the fallback chain now
-        async for rv in db.review_queue.find({"assigned_doctor_id": d["user_id"], "status": OPEN}):
+    moved = plans_moved = 0
+    if not body.available or until:  # their draft plans (with their items) and open items move along the chain now
+        from app.pipeline import doctor_match
+        plans_moved = await doctor_match.plan_aging_check()
+        async for rv in db.review_queue.find({"assigned_doctor_id": d["user_id"], "status": OPEN,
+                                              "plan_draft": {"$ne": True}}):
             moved += await review_router.reroute(rv, "unavailable", avoid_history=False)
     await audit(user.id, "doctor_availability", "doctor", d["user_id"], ip=client_ip(request),
-                meta={"available": body.available, "rerouted": moved})
-    return {"available": body.available, "rerouted": moved}
+                meta={"available": body.available, "rerouted": moved, "plans_moved": plans_moved})
+    return {"available": body.available, "rerouted": moved, "plans_moved": plans_moved}
 
 
 @router.put("/doctors/{doctor_id}/fallback")
@@ -216,7 +258,7 @@ async def system(user: Principal = Depends(admin)):
     except Exception:
         status = "down"
     cols = []
-    for name in sorted(dbmod.VALIDATORS):
+    for name in sorted(dbmod.RULES):
         old = await db[name].count_documents({"schema_version": {"$lt": SCHEMA_VERSION}})
         missing = await db[name].count_documents({"schema_version": {"$exists": False}})
         cols.append({"name": name, "count": await db[name].count_documents({}), "older_schema": old + missing})

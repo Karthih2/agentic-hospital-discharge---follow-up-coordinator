@@ -13,7 +13,7 @@ v1 -> v2:
 import asyncio
 
 from app.core.constants import SCHEMA_VERSION
-from app.core.db import VALIDATORS, get_db, init_db
+from app.core.db import RULES as VALIDATORS, get_db, init_db
 from app.core.util import now
 
 

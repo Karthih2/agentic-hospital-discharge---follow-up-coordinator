@@ -147,8 +147,9 @@ def mention_flags(items: list[dict], lines: list[str]) -> dict[int, list[dict]]:
             continue
         for line in lines:
             low = line.casefold()
+            mine = own[i]  # only the medicine's OWN line is exempt; an injected or second order on any other line counts
             if re.search(rf"\b{re.escape(name)}\b", low) and CHANGE.search(line) \
-                    and not any(low in o or o in low for o in own if o):
+                    and not (mine and (low in mine or mine in low)):
                 out[i] = [_flag("item", "MEDICINE_CONFLICT", "another line mentions a change to this medicine")]
                 break
     return out

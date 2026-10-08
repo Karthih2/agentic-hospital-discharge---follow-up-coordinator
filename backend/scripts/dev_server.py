@@ -1,6 +1,9 @@
-"""Run the API on an in-memory MongoDB with the whole demo loaded, no Atlas and no model calls.
+"""Run the API on an in-memory SQLite database with the whole demo loaded, no model calls.
     python -m scripts.dev_server           http://127.0.0.1:8000  (password for every demo login: Demo@12345)
     python -m scripts.dev_server --live-model   same, but the real model (Groq) reads the 5 summaries (a few minutes)
+    python -m scripts.dev_server --publish      also let each matched doctor publish their plan (skip the review step)
+
+Every plan starts as a DRAFT for its matched doctor (log in as that doctor, open Plans, review, publish).
 
 The 5 sample summaries are planned from the reference extraction in expected.json (the real safety gate, dates and
 planner still run), and plain-language rewrites are canned text. For the real model use  scripts.seed_demo."""
@@ -15,7 +18,6 @@ os.environ.setdefault("JWT_SECRET", "t" * 48)
 os.environ.setdefault("FIELD_ENC_KEY", "7jcwPKyFOEvZ7Lm3PlxzQO4Xrh3CCP6Qrmpuf1/DycY=")
 
 import uvicorn  # noqa: E402
-from mongomock_motor import AsyncMongoMockClient  # noqa: E402
 
 from app.core import db as dbmod  # noqa: E402
 from app.main import app  # noqa: E402
@@ -47,14 +49,16 @@ async def reference_extract(raw):
 
 
 async def main():
-    dbmod.set_db(AsyncMongoMockClient(tz_aware=True)["dev"])
+    dbmod.set_db(dbmod.memory_db())
     if "--live-model" not in sys.argv:  # default: offline reference data; with the flag, the real model builds the plans
         planner.simplify = fake_simplify
         extraction_agent.extract = reference_extract
     data = json.loads((seed_demo.DIR / "demo_people.json").read_text(encoding="utf-8"))
     await seed_demo.seed_reference()
     ids = await seed_demo.build_people(data)
-    await seed_demo.upload_all(data, ids)
+    rows = await seed_demo.upload_all(data, ids)
+    if "--publish" in sys.argv:
+        await seed_demo.publish_all(data, rows)
     seed_demo.login_table(data)
     cfg = uvicorn.Config(app, host="127.0.0.1", port=8000, log_level="warning")
     await uvicorn.Server(cfg).serve()

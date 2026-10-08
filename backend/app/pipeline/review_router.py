@@ -1,5 +1,5 @@
 """Review routing agent (code). Assigns a doctor, reroutes along the admin-controlled fallback chain.
-Everything lives in MongoDB: the assigned doctor on `review_queue`, the chain on `doctors.fallback_doctor_id`."""
+Everything lives in the database: the assigned doctor on `review_queue`, the chain on `doctors.fallback_doctor_id`."""
 from datetime import timedelta
 
 from app.core.audit import audit
@@ -75,6 +75,15 @@ async def assign_to(review: dict, doctor_id, reason: str, actor="system", expect
 async def assign(review: dict) -> None:
     db = get_db()
     task = await db.tasks.find_one({"_id": review["task_id"]})
+    # The doctor matched to this summary's plan reviews its items first (plan and items never split up).
+    summary = await db.discharge_summaries.find_one({"_id": task["summary_id"]}, {"plan_doctor_id": 1}) \
+        if task and task.get("summary_id") else None
+    pd = (summary or {}).get("plan_doctor_id")
+    if pd:
+        d = await db.doctors.find_one({"user_id": pd})
+        if d and is_available(d):
+            await assign_to(review, pd, "plan_doctor")
+            return
     primary = await pick_primary(review, task)
     if not primary:
         return  # stays open and unassigned; shows in the admin's "needs assignment" list
@@ -108,7 +117,8 @@ async def aging_check() -> int:
     db = get_db()
     cutoff = now() - timedelta(hours=settings.review_aging_hours)
     moved = 0
-    async for rv in db.review_queue.find({"status": {"$in": ["open", "in_review"]}}):
+    # items of a draft plan move with their plan (doctor_match.plan_aging_check), never on their own
+    async for rv in db.review_queue.find({"status": {"$in": ["open", "in_review"]}, "plan_draft": {"$ne": True}}):
         hist = rv.get("assignment_history") or []
         since = hist[-1]["assigned_at"] if hist else rv["created_at"]
         doc = await db.doctors.find_one({"user_id": rv.get("assigned_doctor_id")}) if rv.get("assigned_doctor_id") else None

@@ -107,8 +107,9 @@ type NavItem = { to: string; label: string; icon: IconName; end?: boolean };
 const NAV: Record<Role, NavItem[]> = {
   patient: [{ to: "/hub", label: "Family hub", icon: "hubs", end: true }, { to: "/hub/members", label: "Members and consent", icon: "consent" }, { to: "/hub/notifications", label: "Notifications", icon: "notification" }],
   family: [{ to: "/hub", label: "Family hub", icon: "hubs", end: true }, { to: "/hub/members", label: "Members and consent", icon: "consent" }, { to: "/hub/notifications", label: "Notifications", icon: "notification" }],
-  doctor: [{ to: "/doctor", label: "Review queue", icon: "needs-review", end: true }, { to: "/doctor/patients", label: "My patients", icon: "patient" }],
+  doctor: [{ to: "/doctor/plans", label: "Plans to review", icon: "follow-up-plan" }, { to: "/doctor", label: "Review queue", icon: "needs-review", end: true }, { to: "/doctor/patients", label: "My patients", icon: "patient" }],
   admin: [{ to: "/admin/overview", label: "Overview", icon: "overview" }, { to: "/admin/doctors", label: "Doctors", icon: "doctor" }, { to: "/admin/routing", label: "Routing", icon: "routing" },
+    { to: "/admin/plans", label: "Plans", icon: "follow-up-plan" },
     { to: "/admin/hubs", label: "Hubs", icon: "hubs" }, { to: "/admin/audit", label: "Audit log", icon: "audit" }, { to: "/admin/system", label: "System", icon: "system" }],
 };
 
