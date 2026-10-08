@@ -1,0 +1,54 @@
+SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data)
+Hospital: Sunrise General Hospital, Chennai (synthetic)
+Patient: Koushal, 54 years, Male    Patient code: PAT-4101
+
+Date of Admission: 29 Sep 2026
+Date of Discharge: 05 Oct 2026
+Attending Physician: Dr. Raju, Cardiology (attending on the day of discharge)
+PCP: Dr. Aravindh, Anna Nagar Family Clinic, Anna Nagar, Chennai
+Admission Diagnosis: Chest pain
+Discharge Diagnosis: Non-ST elevation myocardial infarction (NSTEMI), treated with a coronary stent
+Secondary Diagnoses: Type 2 diabetes (diet controlled); High cholesterol
+Consultations: Dr. Ram, Physiotherapy (cardiac rehabilitation)
+Procedures: Coronary angiography with one stent to the left anterior descending artery on 30 Sep 2026
+
+HPI:
+54 year old man with 2 hours of central chest pain at rest, sweating and nausea. No previous heart problems known.
+
+Brief Hospital Course:
+- Chest pain: Troponin I was 2.4 ng/ml on admission and peaked at 5.1 ng/ml. ECG showed ST depression in leads V4 to V6. Angiography on 30 Sep 2026 showed a 90 percent LAD narrowing, treated with one stent.
+- Heart function: Echocardiogram on 01 Oct 2026 showed ejection fraction 50 percent.
+- Lipids: Total cholesterol 236 mg/dl, LDL 162 mg/dl.
+- Observed in the coronary care unit for 2 days, then the ward. Pain free since the procedure.
+
+Physical Exam:
+Pulse 72 per minute, BP 126/78 mmHg, SpO2 98 percent on room air. Chest clear. Right wrist puncture site clean with no swelling.
+
+Pending Lab or Test Results:
+1. Repeat lipid profile blood test on Day 10 at Anna Nagar Family Clinic lab, report to Dr. Raju.
+
+Immunizations Given During Admission:
+1. Influenza vaccine 0.5 ml intramuscular given on 04 Oct 2026.
+
+Discharge Disposition: Home with family
+Diet:
+1. Low salt, low fat heart healthy diet. Avoid fried and packaged foods.
+
+Discharge Medications:
+1. Aspirin 75 mg tablet, by mouth, once daily after food, for 12 months.
+2. Clopidogrel 75 mg tablet, by mouth, once daily after food, for 12 months.
+3. Atorvastatin 40 mg tablet, by mouth, once daily at night, for 90 days.
+4. Metoprolol 25 mg tablet, by mouth, twice daily, for 90 days.
+
+Discharge Instructions:
+1. Walk for 10 minutes twice a day on flat ground.
+2. Keep the wrist puncture site clean and dry for 5 days.
+3. Do not lift more than 5 kg for 1 week.
+4. Seek immediate care if chest pain, breathlessness, fainting or bleeding from the wrist occurs.
+
+Follow-up Appointments:
+1. Dr. Raju, Cardiology, Sunrise Heart Clinic, Anna Nagar, Chennai, on 19 Oct 2026 at 10:30 AM. Phone 044-4000-0101.
+2. Dr. Ram, Physiotherapy, Anna Nagar Rehab Centre, Anna Nagar, Chennai, cardiac rehabilitation, starting 12 Oct 2026 at 9:00 AM. Phone 044-4000-0108.
+3. Dr. Aravindh, General Medicine, Anna Nagar Family Clinic, Anna Nagar, Chennai, PCP review in 2 weeks. Phone 044-4000-0106.
+
+CC: PCP Dr. Aravindh, Anna Nagar Family Clinic

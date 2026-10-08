@@ -1,0 +1,61 @@
+- generic [ref=f5e56]:
+  - banner [ref=f5e57]:
+    - generic [ref=f5e58]:
+      - link "Follow-up Coordinator home" [ref=f5e59] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f5e61]: Follow-up Coordinator
+      - navigation "App" [ref=f5e62]:
+        - link "Home" [ref=f5e63] [cursor=pointer]:
+          - /url: /app
+        - link "Family" [ref=f5e65] [cursor=pointer]:
+          - /url: /app/family
+        - link "Notifications" [ref=f5e67] [cursor=pointer]:
+          - /url: /app/notifications
+      - generic [ref=f5e69]:
+        - generic [ref=f5e70]:
+          - generic [ref=f5e72]: Language
+          - combobox "Language" [ref=f5e73]:
+            - option "English" [selected]
+            - option "தமிழ்"
+            - option "हिन्दी"
+            - option "తెలుగు"
+            - option "ಕನ್ನಡ"
+            - option "മലയാളം"
+        - generic [ref=f5e74]: Asha Raman
+        - button "Log out" [ref=f5e75] [cursor=pointer]
+  - main [ref=f5e76]:
+    - generic [ref=f5e143]:
+      - generic [ref=f5e146]:
+        - heading "Follow-up plan" [level=1] [ref=f5e147]
+        - paragraph [ref=f5e148]: 0 of 7 tasks completed
+      - generic [ref=f5e149]:
+        - tablist "View" [ref=f5e150]:
+          - tab "Card View" [selected] [ref=f5e151]
+          - tab "Two-Panel View" [ref=f5e152]
+        - link "Add a task by hand" [ref=f5e153] [cursor=pointer]:
+          - /url: /app/manual/6ac7802d9090186c4a1c8668
+      - generic [ref=f5e154]:
+        - paragraph [ref=f5e155]: Task 1 of 7
+        - article "Physiotherapist for cardiac rehabilitation" [ref=f5e156]:
+          - generic [ref=f5e157]:
+            - generic [ref=f5e160]: Referral
+            - generic [ref=f5e161]: Pending
+          - heading "Physiotherapist for cardiac rehabilitation" [level=2] [ref=f5e163]
+          - paragraph [ref=f5e164]: See a physiotherapist for cardiac rehabilitation.
+          - button "Show original" [ref=f5e166]
+          - generic [ref=f5e167]:
+            - generic [ref=f5e169]:
+              - paragraph [ref=f5e170]: Find a Physiotherapy near you
+              - paragraph [ref=f5e171]: Suggestion only, not a guarantee of availability or suitability
+            - link "Find a provider" [ref=f5e172] [cursor=pointer]:
+              - /url: /app/providers/6ac780629090186c4a1c86a2?specialty=Physiotherapy&pid=6ac7802d9090186c4a1c8668
+          - generic [ref=f5e173]:
+            - button "Listen" [ref=f5e174] [cursor=pointer]
+            - button "Mark done" [ref=f5e176] [cursor=pointer]
+            - button "Ask a doctor to review" [ref=f5e177] [cursor=pointer]
+            - button "Request callback" [ref=f5e178] [cursor=pointer]
+        - generic [ref=f5e180]:
+          - button "Previous" [disabled] [ref=f5e181]
+          - button "Next" [ref=f5e182] [cursor=pointer]
+  - contentinfo [ref=f5e106]:
+    - paragraph [ref=f5e107]: This tool organizes your discharge instructions. It does not give medical advice. Ask your doctor about anything unclear.

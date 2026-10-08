@@ -1,0 +1,177 @@
+- generic [ref=f5e56]:
+  - banner [ref=f5e57]:
+    - generic [ref=f5e58]:
+      - link "Follow-up Coordinator home" [ref=f5e59] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f5e61]: Follow-up Coordinator
+      - navigation "App" [ref=f5e62]:
+        - link "Home" [ref=f5e63] [cursor=pointer]:
+          - /url: /app
+        - link "Family" [ref=f5e65] [cursor=pointer]:
+          - /url: /app/family
+        - link "Notifications" [ref=f5e67] [cursor=pointer]:
+          - /url: /app/notifications
+      - generic [ref=f5e69]:
+        - generic [ref=f5e70]:
+          - generic [ref=f5e72]: Language
+          - combobox "Language" [ref=f5e73]:
+            - option "English" [selected]
+            - option "தமிழ்"
+            - option "हिन्दी"
+            - option "తెలుగు"
+            - option "ಕನ್ನಡ"
+            - option "മലയാളം"
+        - generic [ref=f5e74]: Asha Raman
+        - button "Log out" [ref=f5e75] [cursor=pointer]
+  - main [ref=f5e76]:
+    - generic [ref=f5e143]:
+      - generic [ref=f5e146]:
+        - heading "Follow-up plan" [level=1] [ref=f5e147]
+        - paragraph [ref=f5e148]: 0 of 7 tasks completed
+      - generic [ref=f5e149]:
+        - tablist "View" [ref=f5e150]:
+          - tab "Card View" [ref=f5e151]
+          - tab "Two-Panel View" [active] [selected] [ref=f5e152]
+        - link "Add a task by hand" [ref=f5e153] [cursor=pointer]:
+          - /url: /app/manual/6ac7802d9090186c4a1c8668
+      - generic [ref=f5e183]:
+        - region "Original summary" [ref=f5e184]:
+          - heading "Original summary" [level=2] [ref=f5e185]
+          - paragraph [ref=f5e186]:
+            - generic [ref=f5e187]: Appointments
+            - generic [ref=f5e189]: Medicines
+            - generic [ref=f5e191]: Warnings
+          - generic [ref=f5e193]:
+            - text: "SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data) Patient: Ravi Menon, 61 years Discharge date: 05 Nov 2026 Advice on discharge:"
+            - mark [ref=f5e194]: 1. Follow up with cardiologist in 2 weeks.
+            - mark [ref=f5e195]: 2. Tab. Atorvastatin 20 mg once daily at night for 90 days.
+            - mark [ref=f5e196]: 3. Tab. Aspirin once daily. Continue as advised.
+            - mark [ref=f5e197]: 4. Lipid profile blood test on Day 10.
+            - mark [ref=f5e198]: 5. Refer to physiotherapist for cardiac rehabilitation.
+            - mark [ref=f5e199]: 6. Change dressing every 48 hours.
+            - mark [ref=f5e200]: 7. Seek immediate care if chest pain, breathlessness or swelling of the legs occurs.
+        - region "Tasks" [ref=f5e201]:
+          - article "Atorvastatin" [ref=f5e203]:
+            - generic [ref=f5e204]:
+              - generic [ref=f5e207]: Medicine
+              - generic [ref=f5e208]: Pending
+            - heading "Atorvastatin" [level=2] [ref=f5e210]
+            - generic "Medicine card" [ref=f5e211]:
+              - generic [ref=f5e212]:
+                - term [ref=f5e213]: Medicine name
+                - definition [ref=f5e214]: Atorvastatin
+              - generic [ref=f5e215]:
+                - term [ref=f5e216]: Dose
+                - definition [ref=f5e217]: 20 mg
+              - generic [ref=f5e218]:
+                - term [ref=f5e219]: Timing
+                - definition [ref=f5e220]: once daily at night
+              - generic [ref=f5e221]:
+                - term [ref=f5e222]: Duration
+                - definition [ref=f5e223]: 90 days
+              - generic [ref=f5e224]:
+                - term [ref=f5e225]: Special instructions
+                - definition [ref=f5e226]: Not stated
+            - generic [ref=f5e227]:
+              - generic [ref=f5e228]: 5 Nov 2026
+              - generic [ref=f5e230]:
+                - checkbox "Set reminder" [checked] [ref=f5e231]
+                - text: Set reminder
+            - button "Show original" [ref=f5e233]
+            - generic [ref=f5e234]:
+              - button "Listen" [ref=f5e235] [cursor=pointer]
+              - button "Mark done" [ref=f5e236] [cursor=pointer]
+              - button "Ask a doctor to review" [ref=f5e237] [cursor=pointer]
+              - button "Request callback" [ref=f5e238] [cursor=pointer]
+          - article "Aspirin" [ref=f5e241]:
+            - generic [ref=f5e242]:
+              - generic [ref=f5e245]: Medicine
+              - generic [ref=f5e246]: Needs Review
+            - generic [ref=f5e248]:
+              - paragraph [ref=f5e249]: Waiting for doctor review
+              - paragraph [ref=f5e250]: Aspirin
+            - button "Show original" [ref=f5e252]
+          - article "Lipid profile blood test" [ref=f5e255]:
+            - generic [ref=f5e256]:
+              - generic [ref=f5e259]: Test
+              - generic [ref=f5e260]: Pending
+            - heading "Lipid profile blood test" [level=2] [ref=f5e262]
+            - paragraph [ref=f5e263]: A lipid profile blood test was done on Day 10.
+            - generic [ref=f5e264]:
+              - generic [ref=f5e265]: 15 Nov 2026
+              - generic [ref=f5e267]:
+                - checkbox "Set reminder" [checked] [ref=f5e268]
+                - text: Set reminder
+            - button "Show original" [ref=f5e270]
+            - generic [ref=f5e271]:
+              - button "Listen" [ref=f5e272] [cursor=pointer]
+              - button "Mark done" [ref=f5e273] [cursor=pointer]
+              - button "Ask a doctor to review" [ref=f5e274] [cursor=pointer]
+              - button "Request callback" [ref=f5e275] [cursor=pointer]
+          - article "Cardiologist follow-up" [ref=f5e278]:
+            - generic [ref=f5e279]:
+              - generic [ref=f5e282]: Appointment
+              - generic [ref=f5e283]: Pending
+            - heading "Cardiologist follow-up" [level=2] [ref=f5e285]
+            - paragraph [ref=f5e286]: See the cardiologist in 2 weeks.
+            - generic [ref=f5e287]:
+              - generic [ref=f5e288]: 19 Nov 2026
+              - generic [ref=f5e290]:
+                - checkbox "Set reminder" [checked] [ref=f5e291]
+                - text: Set reminder
+            - button "Show original" [ref=f5e293]
+            - generic [ref=f5e294]:
+              - generic [ref=f5e296]:
+                - paragraph [ref=f5e297]: Find a provider near you, Cardiology
+                - paragraph [ref=f5e298]: Suggestion only, not a guarantee of availability or suitability
+              - link "Find a provider" [ref=f5e299] [cursor=pointer]:
+                - /url: /app/providers/6ac780629090186c4a1c869b?specialty=Cardiology&pid=6ac7802d9090186c4a1c8668
+            - generic [ref=f5e300]:
+              - button "Listen" [ref=f5e301] [cursor=pointer]
+              - button "Mark done" [ref=f5e302] [cursor=pointer]
+              - button "Ask a doctor to review" [ref=f5e303] [cursor=pointer]
+              - button "Request callback" [ref=f5e304] [cursor=pointer]
+          - article "Physiotherapist for cardiac rehabilitation" [ref=f5e307]:
+            - generic [ref=f5e308]:
+              - generic [ref=f5e311]: Referral
+              - generic [ref=f5e312]: Pending
+            - heading "Physiotherapist for cardiac rehabilitation" [level=2] [ref=f5e314]
+            - paragraph [ref=f5e315]: See a physiotherapist for cardiac rehabilitation.
+            - button "Show original" [ref=f5e317]
+            - generic [ref=f5e318]:
+              - generic [ref=f5e320]:
+                - paragraph [ref=f5e321]: Find a provider near you, Physiotherapy
+                - paragraph [ref=f5e322]: Suggestion only, not a guarantee of availability or suitability
+              - link "Find a provider" [ref=f5e323] [cursor=pointer]:
+                - /url: /app/providers/6ac780629090186c4a1c86a2?specialty=Physiotherapy&pid=6ac7802d9090186c4a1c8668
+            - generic [ref=f5e324]:
+              - button "Listen" [ref=f5e325] [cursor=pointer]
+              - button "Mark done" [ref=f5e326] [cursor=pointer]
+              - button "Ask a doctor to review" [ref=f5e327] [cursor=pointer]
+              - button "Request callback" [ref=f5e328] [cursor=pointer]
+          - article "Change dressing" [ref=f5e331]:
+            - generic [ref=f5e332]:
+              - generic [ref=f5e335]: Care instruction
+              - generic [ref=f5e336]: Pending
+            - heading "Change dressing" [level=2] [ref=f5e338]
+            - paragraph [ref=f5e339]: Change the dressing every 48 hours.
+            - button "Show original" [ref=f5e341]
+            - generic [ref=f5e342]:
+              - button "Listen" [ref=f5e343] [cursor=pointer]
+              - button "Mark done" [ref=f5e344] [cursor=pointer]
+              - button "Ask a doctor to review" [ref=f5e345] [cursor=pointer]
+              - button "Request callback" [ref=f5e346] [cursor=pointer]
+          - article "Chest pain, breathlessness or swelling of the legs" [ref=f5e349]:
+            - generic [ref=f5e350]:
+              - generic [ref=f5e353]: Warning
+              - generic [ref=f5e354]: Pending
+            - heading "Chest pain, breathlessness or swelling of the legs" [level=2] [ref=f5e356]
+            - paragraph [ref=f5e357]: If you have chest pain, breathlessness, or leg swelling, seek immediate care.
+            - button "Show original" [ref=f5e359]
+            - generic [ref=f5e360]:
+              - button "Listen" [ref=f5e361] [cursor=pointer]
+              - button "Mark done" [ref=f5e362] [cursor=pointer]
+              - button "Ask a doctor to review" [ref=f5e363] [cursor=pointer]
+              - button "Request callback" [ref=f5e364] [cursor=pointer]
+  - contentinfo [ref=f5e106]:
+    - paragraph [ref=f5e107]: This tool organizes your discharge instructions. It does not give medical advice. Ask your doctor about anything unclear.

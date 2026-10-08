@@ -1,0 +1,334 @@
+{
+  "note": "All fictional demo accounts. Password for every login: Demo@12345",
+  "password": "Demo@12345",
+  "admin": {
+    "key": "admin",
+    "name": "Hospital Admin Desk",
+    "role": "admin",
+    "login": "admin"
+  },
+  "doctors": [
+    {
+      "key": "raju",
+      "name": "Dr. Raju",
+      "specialty": "Cardiology",
+      "clinic": "Sunrise Heart Clinic",
+      "area": "Anna Nagar",
+      "phone": "044-4000-0101",
+      "available": true,
+      "fallback": "aravindh",
+      "login": "dr.raju",
+      "role": "doctor",
+      "assigned_patients": [
+        "koushal"
+      ]
+    },
+    {
+      "key": "jason",
+      "name": "Dr. Jason",
+      "specialty": "Orthopedics",
+      "clinic": "Perambur Bone and Joint Clinic",
+      "area": "Perambur",
+      "phone": "044-4000-0102",
+      "available": false,
+      "fallback": "mallu",
+      "login": "dr.jason",
+      "role": "doctor",
+      "assigned_patients": [
+        "kabel"
+      ]
+    },
+    {
+      "key": "sanjay",
+      "name": "Dr. Sanjay",
+      "specialty": "Endocrinology",
+      "clinic": "Kilpauk Diabetes Centre",
+      "area": "Kilpauk",
+      "phone": "044-4000-0103",
+      "available": true,
+      "fallback": "karthikeyan",
+      "login": "dr.sanjay",
+      "role": "doctor",
+      "assigned_patients": [
+        "sureshkumar"
+      ]
+    },
+    {
+      "key": "vijay",
+      "name": "Dr. Vijay",
+      "specialty": "Pediatrics",
+      "clinic": "Little Steps Children's Clinic",
+      "area": "Kilpauk",
+      "phone": "044-4000-0104",
+      "available": true,
+      "fallback": "madhumathi",
+      "login": "dr.vijay",
+      "role": "doctor",
+      "assigned_patients": [
+        "giri"
+      ]
+    },
+    {
+      "key": "madhumathi",
+      "name": "Dr. Madhumathi",
+      "specialty": "Pediatric Pulmonology",
+      "clinic": "Chennai Child Lung Centre",
+      "area": "Egmore",
+      "phone": "044-4000-0105",
+      "available": true,
+      "fallback": "vijay",
+      "login": "dr.madhumathi",
+      "role": "doctor",
+      "assigned_patients": []
+    },
+    {
+      "key": "aravindh",
+      "name": "Dr. Aravindh",
+      "specialty": "General Medicine",
+      "clinic": "Anna Nagar Family Clinic",
+      "area": "Anna Nagar",
+      "phone": "044-4000-0106",
+      "available": true,
+      "fallback": "karthikeyan",
+      "login": "dr.aravindh",
+      "role": "doctor",
+      "assigned_patients": []
+    },
+    {
+      "key": "mallu",
+      "name": "Dr. Mallu Karthick Balaji Reddy",
+      "specialty": "General Surgery",
+      "clinic": "Kilpauk Surgical Clinic",
+      "area": "Kilpauk",
+      "phone": "044-4000-0107",
+      "available": true,
+      "fallback": "aravindh",
+      "login": "dr.mallu",
+      "role": "doctor",
+      "assigned_patients": []
+    },
+    {
+      "key": "ram",
+      "name": "Dr. Ram",
+      "specialty": "Physiotherapy",
+      "clinic": "Anna Nagar Rehab Centre",
+      "area": "Anna Nagar",
+      "phone": "044-4000-0108",
+      "available": true,
+      "fallback": "aravindh",
+      "login": "dr.ram",
+      "role": "doctor",
+      "assigned_patients": []
+    },
+    {
+      "key": "jega",
+      "name": "Dr. Jega",
+      "specialty": "Nephrology",
+      "clinic": "Kilpauk Kidney Care",
+      "area": "Kilpauk",
+      "phone": "044-4000-0109",
+      "available": true,
+      "fallback": "aravindh",
+      "login": "dr.jega",
+      "role": "doctor",
+      "assigned_patients": []
+    },
+    {
+      "key": "karthikeyan",
+      "name": "Dr. Karthikeyan",
+      "specialty": "General Medicine",
+      "clinic": "Perambur Health Clinic",
+      "area": "Perambur",
+      "phone": "044-4000-0110",
+      "available": true,
+      "fallback": "aravindh",
+      "login": "dr.karthikeyan",
+      "role": "doctor",
+      "assigned_patients": []
+    }
+  ],
+  "patients": [
+    {
+      "key": "koushal",
+      "name": "Koushal",
+      "age": "54 years",
+      "sex": "Male",
+      "language": "en",
+      "patient_code": "PAT-4101",
+      "primary_doctor": "raju",
+      "pcp": "aravindh",
+      "login": "koushal",
+      "role": "patient",
+      "guardian": null,
+      "can_login": true
+    },
+    {
+      "key": "kabel",
+      "name": "Kabel",
+      "age": "67 years",
+      "sex": "Male",
+      "language": "ta",
+      "patient_code": "PAT-4102",
+      "primary_doctor": "jason",
+      "pcp": "karthikeyan",
+      "login": "kabel",
+      "role": "patient",
+      "guardian": null,
+      "can_login": true
+    },
+    {
+      "key": "sureshkumar",
+      "name": "Sureshkumar",
+      "age": "58 years",
+      "sex": "Male",
+      "language": "hi",
+      "patient_code": "PAT-4103",
+      "primary_doctor": "sanjay",
+      "pcp": "karthikeyan",
+      "login": "sureshkumar",
+      "role": "patient",
+      "guardian": null,
+      "can_login": true
+    },
+    {
+      "key": "giri",
+      "name": "Giri",
+      "age": "9 months",
+      "sex": "Male",
+      "language": "ta",
+      "patient_code": "PAT-4104",
+      "primary_doctor": "vijay",
+      "pcp": "aravindh",
+      "login": "giri",
+      "role": "patient",
+      "guardian": "sureshkumar",
+      "can_login": false
+    }
+  ],
+  "family": [
+    {
+      "key": "ravi",
+      "name": "Ravi",
+      "language": "en",
+      "login": "ravi",
+      "role": "family"
+    },
+    {
+      "key": "meena",
+      "name": "Meena",
+      "language": "ta",
+      "login": "meena",
+      "role": "family"
+    },
+    {
+      "key": "lakshmi",
+      "name": "Lakshmi",
+      "language": "hi",
+      "login": "lakshmi",
+      "role": "family"
+    }
+  ],
+  "hubs": [
+    {
+      "key": "hub_koushal_kabel",
+      "name": "Koushal and Kabel family hub",
+      "manager": "ravi",
+      "members": [
+        {
+          "person": "ravi",
+          "role": "manager"
+        },
+        {
+          "person": "koushal",
+          "role": "patient"
+        },
+        {
+          "person": "kabel",
+          "role": "patient"
+        },
+        {
+          "person": "meena",
+          "role": "viewer"
+        }
+      ],
+      "consents": [
+        {
+          "patient": "koushal",
+          "grantee": "ravi",
+          "level": "full",
+          "granted_by": "koushal"
+        },
+        {
+          "patient": "koushal",
+          "grantee": "meena",
+          "level": "appointments",
+          "granted_by": "koushal"
+        },
+        {
+          "patient": "kabel",
+          "grantee": "ravi",
+          "level": "full",
+          "granted_by": "kabel"
+        },
+        {
+          "patient": "kabel",
+          "grantee": "meena",
+          "level": "reminders",
+          "granted_by": "kabel"
+        }
+      ]
+    },
+    {
+      "key": "hub_sureshkumar",
+      "name": "Sureshkumar family hub",
+      "manager": "sureshkumar",
+      "members": [
+        {
+          "person": "sureshkumar",
+          "role": "manager"
+        },
+        {
+          "person": "sureshkumar",
+          "role": "patient"
+        },
+        {
+          "person": "giri",
+          "role": "patient"
+        },
+        {
+          "person": "lakshmi",
+          "role": "viewer"
+        }
+      ],
+      "consents": [
+        {
+          "patient": "giri",
+          "grantee": "sureshkumar",
+          "level": "full",
+          "granted_by": "sureshkumar",
+          "guardian_consent": true
+        },
+        {
+          "patient": "giri",
+          "grantee": "lakshmi",
+          "level": "reminders",
+          "granted_by": "sureshkumar",
+          "guardian_consent": true
+        },
+        {
+          "patient": "sureshkumar",
+          "grantee": "lakshmi",
+          "level": "appointments",
+          "granted_by": "sureshkumar"
+        }
+      ]
+    }
+  ],
+  "summaries": {
+    "01_koushal_cardiac_clean.txt": "koushal",
+    "02_kabel_knee_replacement.txt": "kabel",
+    "03_sureshkumar_diabetes_unclear.txt": "sureshkumar",
+    "04_giri_pediatric_pneumonia.txt": "giri",
+    "05_koushal_safety_edge_cases.txt": "koushal"
+  }
+}

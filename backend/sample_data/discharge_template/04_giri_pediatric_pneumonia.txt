@@ -1,0 +1,51 @@
+SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data)
+Hospital: Sunrise General Hospital, Chennai (synthetic)
+Patient: Giri, 9 months, Male    Patient code: PAT-4104
+
+Date of Admission: 28 Sep 2026
+Date of Discharge: 06 Oct 2026
+Attending Physician: Dr. Vijay, Pediatrics (attending on the day of discharge)
+PCP: Dr. Aravindh, Anna Nagar Family Clinic, Anna Nagar, Chennai
+Admission Diagnosis: Respiratory distress and poor feeding
+Discharge Diagnosis: RSV bronchiolitis with right lower lobe pneumonia
+Secondary Diagnoses: Ex 34 week prematurity; Suspected cow's milk protein allergy; Respiratory failure, resolved
+Consultations: Dr. Madhumathi, Pediatric Pulmonology
+Procedures: High flow nasal oxygen in the PICU from 28 Sep to 30 Sep 2026
+
+HPI:
+9 month old boy, born at 34 weeks, with 3 days of cough, fast breathing and feeding less than half of usual.
+
+Brief Hospital Course:
+- Breathing: Admitted to the PICU on 28 Sep 2026 with SpO2 86 percent, treated with high flow oxygen for 2 days, moved to the ward on 30 Sep 2026. Room air since 03 Oct 2026.
+- Infection: RSV test positive. Chest X-ray showed right lower lobe consolidation. CRP 48 mg/l, treated with antibiotics, CRP 9 mg/l on 05 Oct 2026.
+- Feeding: Blood in stool on 02 Oct 2026, formula changed in hospital, stool clear since.
+
+Physical Exam:
+Weight 7.9 kg. Pulse 128 per minute, breathing 36 per minute, SpO2 97 percent on room air, temperature 36.9 C. Mild wheeze on the right, no chest indrawing.
+
+Pending Lab or Test Results:
+1. Blood culture final report expected in 3 days; Dr. Vijay will call the family.
+
+Immunizations Given During Admission:
+1. Influenza vaccine dose 1 (0.25 ml) given on 05 Oct 2026.
+2. Influenza vaccine dose 2 due in 4 weeks at Little Steps Children's Clinic.
+
+Discharge Disposition: Home with parents
+Diet:
+1. Formula changed from standard infant formula to extensively hydrolysed formula, 120 ml every 3 hours.
+
+Discharge Medications:
+1. Amoxicillin oral suspension 400 mg (5 ml), by mouth, twice daily, for 5 days.
+2. Paracetamol oral drops 120 mg (1.2 ml), by mouth, every 6 hours as needed for fever above 38 C.
+3. Saline nasal drops, 2 drops in each nostril before feeds, for 7 days.
+
+Discharge Instructions:
+1. Give small, frequent feeds and count wet nappies every day.
+2. Keep the baby away from smoke and from people with colds.
+3. Seek immediate care if fast breathing, chest indrawing, bluish lips, poor feeding or fewer than 4 wet nappies a day occurs.
+
+Follow-up Appointments:
+1. Dr. Vijay, Pediatrics, Little Steps Children's Clinic, Kilpauk, Chennai, on 10 Oct 2026 at 10:00 AM. Phone 044-4000-0104.
+2. Dr. Madhumathi, Pediatric Pulmonology, Chennai Child Lung Centre, Egmore, Chennai, in 4 weeks. Phone 044-4000-0105.
+
+CC: PCP Dr. Aravindh, Anna Nagar Family Clinic

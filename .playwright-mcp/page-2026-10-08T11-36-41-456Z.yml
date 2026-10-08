@@ -1,0 +1,47 @@
+- generic [ref=f5e56]:
+  - banner [ref=f5e57]:
+    - generic [ref=f5e58]:
+      - link "Follow-up Coordinator home" [ref=f5e59] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f5e61]: Follow-up Coordinator
+      - navigation "App" [ref=f5e62]:
+        - link "Home" [ref=f5e63] [cursor=pointer]:
+          - /url: /app
+        - link "Family" [ref=f5e65] [cursor=pointer]:
+          - /url: /app/family
+        - link "Notifications" [ref=f5e67] [cursor=pointer]:
+          - /url: /app/notifications
+      - generic [ref=f5e69]:
+        - generic [ref=f5e70]:
+          - generic [ref=f5e72]: Language
+          - combobox "Language" [ref=f5e73]:
+            - option "English" [selected]
+            - option "தமிழ்"
+            - option "हिन्दी"
+            - option "తెలుగు"
+            - option "ಕನ್ನಡ"
+            - option "മലയാളം"
+        - generic [ref=f5e74]: Asha Raman
+        - button "Log out" [ref=f5e75] [cursor=pointer]
+  - main [ref=f5e76]:
+    - generic [ref=f5e108]:
+      - generic [ref=f5e111]:
+        - heading "Your discharge plan" [level=1] [ref=f5e112]
+        - paragraph [ref=f5e113]:
+          - text: "Your patient code for family members:"
+          - strong [ref=f5e114]: PAT-2676
+      - region [ref=f5e115]:
+        - heading "Add a discharge summary" [level=2] [ref=f5e116]
+        - tablist "Input" [ref=f5e117]:
+          - tab "Paste Text" [selected] [ref=f5e118]
+          - tab "Upload File" [ref=f5e119]
+        - generic [ref=f5e120]:
+          - generic [ref=f5e121]: Discharge summary text
+          - textbox "Discharge summary text Synthetic text only. Do not enter real patient information." [ref=f5e122]
+          - generic [ref=f5e123]: Synthetic text only. Do not enter real patient information.
+        - button "Analyse" [ref=f5e124] [cursor=pointer]
+      - region [ref=f5e125]:
+        - heading "Previous summaries" [level=2] [ref=f5e126]
+        - paragraph [ref=f5e128]: Nothing uploaded yet. Add your first summary above.
+  - contentinfo [ref=f5e106]:
+    - paragraph [ref=f5e107]: This tool organizes your discharge instructions. It does not give medical advice. Ask your doctor about anything unclear.

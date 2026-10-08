@@ -1,0 +1,341 @@
+- generic [ref=f10e2]:
+  - banner [ref=f10e3]:
+    - generic [ref=f10e4]:
+      - link "Follow-up Coordinator home" [ref=f10e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f10e7]: Follow-up Coordinator
+      - button "Menu" [ref=f10e8] [cursor=pointer]
+  - main [ref=f10e9]:
+    - generic [ref=f10e10]:
+      - generic [ref=f10e11]:
+        - heading "Your discharge papers, turned into a plan you can follow." [level=1] [ref=f10e12]:
+          - generic [aria-hidden] [ref=f10e13]: Your
+          - generic [aria-hidden] [ref=f10e14]: discharge
+          - generic [aria-hidden] [ref=f10e15]: papers,
+          - generic [aria-hidden] [ref=f10e16]: turned
+          - generic [aria-hidden] [ref=f10e17]: into
+          - generic [aria-hidden] [ref=f10e18]: a
+          - generic [aria-hidden] [ref=f10e19]: plan
+          - generic [aria-hidden] [ref=f10e20]: you
+          - generic [aria-hidden] [ref=f10e21]: can
+          - generic [aria-hidden] [ref=f10e22]: follow.
+        - paragraph [ref=f10e23]:
+          - generic [ref=f10e24]: Upload
+          - generic [ref=f10e25]: a
+          - generic [ref=f10e26]: discharge
+          - generic [ref=f10e27]: summary.
+          - generic [ref=f10e28]: Get
+          - generic [ref=f10e29]: tasks,
+          - generic [ref=f10e30]: dates,
+          - generic [ref=f10e31]: reminders
+          - generic [ref=f10e32]: and
+          - generic [ref=f10e33]: a
+          - generic [ref=f10e34]: timeline,
+          - generic [ref=f10e35]: explained
+          - generic [ref=f10e36]: in
+          - generic [ref=f10e37]: your
+          - generic [ref=f10e38]: language
+          - generic [ref=f10e39]: and
+          - generic [ref=f10e40]: tied
+          - generic [ref=f10e41]: to
+          - generic [ref=f10e42]: the
+          - generic [ref=f10e43]: exact
+          - generic [ref=f10e44]: line
+          - generic [ref=f10e45]: each
+          - generic [ref=f10e46]: one
+          - generic [ref=f10e47]: came
+          - generic [ref=f10e48]: from.
+        - generic [ref=f10e49]:
+          - link "Try the demo" [ref=f10e50] [cursor=pointer]:
+            - /url: "#demo"
+          - link "Sign in" [ref=f10e51] [cursor=pointer]:
+            - /url: /login
+        - paragraph [ref=f10e52]: Prototype for the Acentra Hackathon. Synthetic data only.
+      - group "Example follow-up plan, synthetic data" [ref=f10e54]:
+        - generic [ref=f10e57]:
+          - paragraph [ref=f10e58]: Ravi Menon, follow-up plan
+          - paragraph [ref=f10e59]: Synthetic patient. Cardiac discharge.
+        - list [ref=f10e60]:
+          - listitem [ref=f10e62]:
+            - generic [ref=f10e64]:
+              - generic [ref=f10e65]: Discharged from hospital
+              - generic [ref=f10e66]: 5 Nov
+          - listitem [ref=f10e67]:
+            - generic [ref=f10e69]:
+              - generic [ref=f10e70]: Start Atorvastatin and Aspirin
+              - generic [ref=f10e71]: 5 Nov
+          - listitem [ref=f10e72]:
+            - generic [ref=f10e74]:
+              - generic [ref=f10e75]: Change chest dressing
+              - generic [ref=f10e76]: 7 Nov
+          - listitem [ref=f10e77]:
+            - generic [ref=f10e79]:
+              - generic [ref=f10e80]: Lipid profile blood test
+              - generic [ref=f10e81]: 15 Nov
+          - listitem [ref=f10e82]:
+            - generic [ref=f10e84]:
+              - generic [ref=f10e85]: Cardiologist follow-up
+              - generic [ref=f10e86]: 19 Nov
+          - listitem [ref=f10e87]:
+            - generic [ref=f10e89]:
+              - generic [ref=f10e90]: Aspirin dose unclear
+              - generic [ref=f10e91]: Awaiting
+        - generic [ref=f10e92]:
+          - generic [ref=f10e93]: Completed
+          - generic [ref=f10e95]: Pending
+          - generic [ref=f10e97]: Needs review
+    - generic [ref=f10e99]:
+      - generic [ref=f10e100]:
+        - heading "Seven kinds of instruction, found and filed." [level=2] [ref=f10e101]
+        - paragraph [ref=f10e102]: Every item is saved with the exact line of the summary it came from.
+      - list [ref=f10e103]:
+        - listitem [ref=f10e104]:
+          - generic [ref=f10e107]:
+            - heading "Appointments" [level=3] [ref=f10e108]
+            - paragraph [ref=f10e109]: Follow up with cardiologist in 2 weeks
+        - listitem [ref=f10e110]:
+          - generic [ref=f10e113]:
+            - heading "Tests" [level=3] [ref=f10e114]
+            - paragraph [ref=f10e115]: Fasting blood sugar test on Day 7
+        - listitem [ref=f10e116]:
+          - generic [ref=f10e119]:
+            - heading "Referrals" [level=3] [ref=f10e120]
+            - paragraph [ref=f10e121]: Refer to physiotherapist
+        - listitem [ref=f10e122]:
+          - generic [ref=f10e125]:
+            - heading "Medicines" [level=3] [ref=f10e126]
+            - paragraph [ref=f10e127]: Tab. Metformin 500 mg twice daily for 30 days
+        - listitem [ref=f10e128]:
+          - generic [ref=f10e131]:
+            - heading "Care instructions" [level=3] [ref=f10e132]
+            - paragraph [ref=f10e133]: Change wound dressing every 48 hours
+        - listitem [ref=f10e134]:
+          - generic [ref=f10e137]:
+            - heading "Dates" [level=3] [ref=f10e138]
+            - paragraph [ref=f10e139]: Review with orthopedic surgeon on 26 Nov 2026
+        - listitem [ref=f10e140]:
+          - generic [ref=f10e143]:
+            - heading "Warning signs" [level=3] [ref=f10e144]
+            - paragraph [ref=f10e145]: Seek immediate care if chest pain or breathlessness occurs
+    - generic [ref=f10e147]:
+      - heading "From a sheet of paper to a plan, in five steps." [level=2] [ref=f10e149]
+      - list [ref=f10e150]:
+        - listitem [ref=f10e152]:
+          - generic [ref=f10e156]:
+            - heading "1. Upload" [level=3] [ref=f10e157]
+            - paragraph [ref=f10e158]: Paste the text or add a PDF or text file. Blank, scanned or non-medical input stops here with a clear message and a form to enter tasks by hand.
+        - listitem [ref=f10e159]:
+          - generic [ref=f10e163]:
+            - heading "2. Extract" [level=3] [ref=f10e164]
+            - paragraph [ref=f10e165]: A model reads the summary and returns the seven kinds of item, each with the exact line it came from and a confidence score.
+        - listitem [ref=f10e166]:
+          - generic [ref=f10e170]:
+            - heading "3. Check" [level=3] [ref=f10e171]
+            - paragraph [ref=f10e172]: Fixed rules decide what is clear. Anything missing, ambiguous or clinically sensitive is marked Needs Review.
+        - listitem [ref=f10e173]:
+          - generic [ref=f10e177]:
+            - heading "4. Explain" [level=3] [ref=f10e178]
+            - paragraph [ref=f10e179]: Care instructions and warnings are rewritten in plain language and translated. Medicines keep a fixed card and are never reworded.
+        - listitem [ref=f10e180]:
+          - generic [ref=f10e184]:
+            - heading "5. Follow through" [level=3] [ref=f10e185]
+            - paragraph [ref=f10e186]: Reminders go to you and, with your consent, to family. A missed task alerts the family member you chose.
+    - heading "A model reads. Fixed rules decide. A doctor approves." [level=2] [ref=f10e188]:
+      - paragraph [ref=f10e189]:
+        - generic [ref=f10e190]: A
+        - generic [ref=f10e191]: model
+        - generic [ref=f10e192]: reads.
+        - generic [ref=f10e193]: Fixed
+        - generic [ref=f10e194]: rules
+        - generic [ref=f10e195]: decide.
+        - generic [ref=f10e196]: A
+        - generic [ref=f10e197]: doctor
+        - generic [ref=f10e198]: approves.
+    - generic [ref=f10e200]:
+      - generic [ref=f10e201]:
+        - heading "When the system is unsure, a person decides." [level=2] [ref=f10e203]
+        - list [ref=f10e204]:
+          - listitem [ref=f10e205]:
+            - generic [ref=f10e207]: The gate is a set of fixed rules. It gives the same answer every time and can be explained.
+          - listitem [ref=f10e208]:
+            - generic [ref=f10e210]: It flags a missing or unclear date, dose, timing or doctor name, a symptom question, a medicine change, stop or clash, extraction confidence under 70%, and text that fits no category.
+          - listitem [ref=f10e211]:
+            - generic [ref=f10e213]: The system never resolves a flagged item. Only a doctor can close it.
+          - listitem [ref=f10e214]:
+            - generic [ref=f10e216]: Family members see "Waiting for doctor review" and nothing more.
+      - generic [ref=f10e217]:
+        - list [ref=f10e218]:
+          - listitem [ref=f10e219]:
+            - generic [ref=f10e222]: Item
+          - listitem [ref=f10e223]:
+            - generic [ref=f10e226]: Safety gate
+          - listitem [ref=f10e227]:
+            - generic [ref=f10e230]: Needs Review
+          - listitem [ref=f10e231]:
+            - generic [ref=f10e234]: Doctor
+          - listitem [ref=f10e235]:
+            - generic [ref=f10e238]: Pending
+        - paragraph [ref=f10e239]: Clean items go straight to Pending. Flagged items wait for a doctor, who can confirm them or correct them. A correction is checked by the gate again before it is accepted.
+    - generic [ref=f10e240]:
+      - generic [ref=f10e241]:
+        - heading "See it work on a synthetic summary." [level=2] [ref=f10e242]
+        - paragraph [ref=f10e243]: Lines are marked as they are read. Each becomes a task that keeps its original line one tap away. The Aspirin line has no dose, so it waits for a doctor.
+      - generic [ref=f10e244]:
+        - generic [ref=f10e245]:
+          - generic [ref=f10e246]:
+            - heading "Discharge summary" [level=3] [ref=f10e248]
+            - generic [ref=f10e249]: Synthetic
+          - list [ref=f10e250]:
+            - listitem [ref=f10e251]: Follow up with cardiologist in 2 weeks.
+            - listitem [ref=f10e252]: Tab. Metformin 500 mg twice daily for 30 days after food.
+            - listitem [ref=f10e253]: Fasting blood sugar test on Day 7.
+            - listitem [ref=f10e254]: Change wound dressing every 48 hours.
+            - listitem [ref=f10e255]: Seek immediate care if chest pain or breathlessness occurs.
+            - listitem [ref=f10e256]: Tab. Aspirin once daily. Continue as advised.
+        - generic [ref=f10e257]:
+          - generic [ref=f10e258]:
+            - heading "Follow-up plan" [level=3] [ref=f10e260]
+            - button "Replay" [ref=f10e261] [cursor=pointer]
+          - list [ref=f10e262]:
+            - listitem [ref=f10e263]
+            - listitem [ref=f10e268]
+            - listitem [ref=f10e273]
+    - generic [ref=f10e278]:
+      - generic [ref=f10e280]:
+        - heading "Six languages, one plan." [level=2] [ref=f10e281]
+        - paragraph [ref=f10e282]: Every task is rewritten in plain language and translated. The numbers in each translation are checked against the original line, and the original stays one tap away.
+      - generic [ref=f10e286]:
+        - generic [ref=f10e287]:
+          - generic [ref=f10e288]: English
+          - generic [ref=f10e290]: தமிழ்
+          - generic [ref=f10e292]: हिन्दी
+          - generic [ref=f10e294]: తెలుగు
+          - generic [ref=f10e296]: ಕನ್ನಡ
+          - generic [ref=f10e298]: മലയാളം
+        - generic [ref=f10e300]:
+          - generic [ref=f10e301]: English
+          - generic [ref=f10e303]: தமிழ்
+          - generic [ref=f10e305]: हिन्दी
+          - generic [ref=f10e307]: తెలుగు
+          - generic [ref=f10e309]: ಕನ್ನಡ
+          - generic [ref=f10e311]: മലയാളം
+        - generic [ref=f10e313]:
+          - generic [ref=f10e314]: English
+          - generic [ref=f10e316]: தமிழ்
+          - generic [ref=f10e318]: हिन्दी
+          - generic [ref=f10e320]: తెలుగు
+          - generic [ref=f10e322]: ಕನ್ನಡ
+          - generic [ref=f10e324]: മലയാളം
+        - generic [ref=f10e326]:
+          - generic [ref=f10e327]: English
+          - generic [ref=f10e329]: தமிழ்
+          - generic [ref=f10e331]: हिन्दी
+          - generic [ref=f10e333]: తెలుగు
+          - generic [ref=f10e335]: ಕನ್ನಡ
+          - generic [ref=f10e337]: മലയാളം
+      - generic [ref=f10e339]:
+        - paragraph [ref=f10e340]: "One task from the sample summary, as the system wrote it:"
+        - list [ref=f10e341]:
+          - listitem [ref=f10e342]:
+            - generic [ref=f10e344]:
+              - paragraph [ref=f10e345]: See the cardiologist in 2 weeks.
+              - paragraph [ref=f10e346]: English
+          - listitem [ref=f10e347]:
+            - generic [ref=f10e349]:
+              - paragraph [ref=f10e350]: 2 வாரங்களில் இதய மருத்துவரை சந்திக்கவும்.
+              - paragraph [ref=f10e351]: Tamil
+          - listitem [ref=f10e352]:
+            - generic [ref=f10e354]:
+              - paragraph [ref=f10e355]: 2 सप्ताह में कार्डियोलॉजिस्ट से मिलें।
+              - paragraph [ref=f10e356]: Hindi
+          - listitem [ref=f10e357]:
+            - generic [ref=f10e359]:
+              - paragraph [ref=f10e360]: 2 వారాల్లో కార్డియాలజిస్ట్‌ను కలవండి.
+              - paragraph [ref=f10e361]: Telugu
+          - listitem [ref=f10e362]:
+            - generic [ref=f10e364]:
+              - paragraph [ref=f10e365]: 2 ವಾರಗಳಲ್ಲಿ ಕಾರ್ಡಿಯಾಲಜಿಸ್ಟ್‌ನನ್ನು ಭೇಟಿಯಾಗಿ.
+              - paragraph [ref=f10e366]: Kannada
+          - listitem [ref=f10e367]:
+            - generic [ref=f10e369]:
+              - paragraph [ref=f10e370]: 2 ആഴ്ചകൾക്കുള്ളിൽ കാർഡിയോളജിസ്റ്റിനെ കാണുക.
+              - paragraph [ref=f10e371]: Malayalam
+        - paragraph [ref=f10e372]: Machine translated. Telugu, Kannada and Malayalam should be checked by a fluent reader before real use.
+    - generic [ref=f10e373]:
+      - heading "The patient owns the plan. Everyone else gets what they are given." [level=2] [ref=f10e375]
+      - generic [ref=f10e376]:
+        - tablist "Roles" [ref=f10e377]:
+          - tab "Patient" [selected] [ref=f10e378]
+          - tab "Family member" [ref=f10e380]
+          - tab "Doctor reviewer" [ref=f10e382]
+          - tab "Hospital desk" [ref=f10e384]
+        - tabpanel [ref=f10e386]:
+          - generic [ref=f10e387]:
+            - generic [ref=f10e388]:
+              - heading "Can" [level=3] [ref=f10e389]
+              - list [ref=f10e390]:
+                - listitem [ref=f10e391]: Upload a summary and see the full plan
+                - listitem [ref=f10e393]: Tick tasks, pick a language, request a callback
+                - listitem [ref=f10e395]: Choose which family members see what, and take it back at any time
+            - generic [ref=f10e397]:
+              - heading "Cannot" [level=3] [ref=f10e398]
+              - list [ref=f10e399]:
+                - listitem [ref=f10e400]: Edit the extracted medical instructions
+    - generic [ref=f10e403]:
+      - heading "Questions people ask first." [level=2] [ref=f10e405]
+      - generic [ref=f10e406]:
+        - group [ref=f10e407]:
+          - generic "Does it give medical advice?" [ref=f10e408] [cursor=pointer]:
+            - text: Does it give medical advice?
+            - generic [aria-hidden] [ref=f10e409]: +
+        - group [ref=f10e410]:
+          - generic "Is any of this real patient data?" [ref=f10e411] [cursor=pointer]:
+            - text: Is any of this real patient data?
+            - generic [aria-hidden] [ref=f10e412]: +
+        - group [ref=f10e413]:
+          - generic "What happens when the system is unsure?" [ref=f10e414] [cursor=pointer]:
+            - text: What happens when the system is unsure?
+            - generic [aria-hidden] [ref=f10e415]: +
+        - group [ref=f10e416]:
+          - generic "Who can see my plan?" [ref=f10e417] [cursor=pointer]:
+            - text: Who can see my plan?
+            - generic [aria-hidden] [ref=f10e418]: +
+        - group [ref=f10e419]:
+          - generic "Are provider suggestions a recommendation?" [ref=f10e420] [cursor=pointer]:
+            - text: Are provider suggestions a recommendation?
+            - generic [aria-hidden] [ref=f10e421]: +
+        - group [ref=f10e422]:
+          - generic "Can I delete my data?" [ref=f10e423] [cursor=pointer]:
+            - text: Can I delete my data?
+            - generic [aria-hidden] [ref=f10e424]: +
+    - generic [ref=f10e426]:
+      - generic [ref=f10e427]:
+        - heading "Try it with a synthetic summary." [level=2] [ref=f10e428]
+        - paragraph [ref=f10e429]: 0 kinds of item, 0 languages, and a model in 0 of 0 agents.
+      - generic [ref=f10e430]:
+        - link "Get started" [ref=f10e431] [cursor=pointer]:
+          - /url: /register
+        - link "Sign in" [ref=f10e432] [cursor=pointer]:
+          - /url: /login
+  - contentinfo [ref=f10e433]:
+    - generic [ref=f10e434]:
+      - generic [ref=f10e435]:
+        - generic [ref=f10e436]: Follow-up Coordinator
+        - paragraph [ref=f10e438]: Built for the Acentra Hackathon. A prototype that runs on synthetic data only. Not a medical device.
+      - navigation "Legal" [ref=f10e439]:
+        - link "Terms of Service" [ref=f10e440] [cursor=pointer]:
+          - /url: /terms
+        - link "Privacy Policy" [ref=f10e441] [cursor=pointer]:
+          - /url: /privacy
+        - link "Sign in" [ref=f10e442] [cursor=pointer]:
+          - /url: /login
+      - generic [ref=f10e443]:
+        - generic [ref=f10e445]: Language
+        - combobox "Language" [ref=f10e446]:
+          - option "English" [selected]
+          - option "தமிழ்"
+          - option "हिन्दी"
+          - option "తెలుగు"
+          - option "ಕನ್ನಡ"
+          - option "മലയാളം"
+    - paragraph [ref=f10e448]: This tool organizes your discharge instructions. It does not give medical advice. Ask your doctor about anything unclear.

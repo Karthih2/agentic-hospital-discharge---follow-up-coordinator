@@ -1,0 +1,12 @@
+SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data)
+Patient: Farooq Ahmed, 54 years
+Discharge date: 20 Nov 2026
+
+Advice on discharge:
+1. Tab. Metformin 500 mg twice daily for 30 days after food.
+2. Tab. Metformin 1000 mg once daily.
+3. Stop Glimepiride after one week.
+4. Tab. Amlodipine daily. Continue as advised.
+5. Follow up soon with the diabetes doctor.
+6. What should I do if my sugar drops and I feel dizzy?
+7. Fasting blood sugar test on Day 7.

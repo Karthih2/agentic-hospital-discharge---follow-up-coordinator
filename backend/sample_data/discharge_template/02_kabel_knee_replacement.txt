@@ -1,0 +1,52 @@
+SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data)
+Hospital: Sunrise General Hospital, Chennai (synthetic)
+Patient: Kabel, 67 years, Male    Patient code: PAT-4102
+
+Date of Admission: 30 Sep 2026
+Date of Discharge: 06 Oct 2026
+Attending Physician: Dr. Jason, Orthopedics (attending on the day of discharge)
+PCP: Dr. Karthikeyan, Perambur Health Clinic, Perambur, Chennai
+Admission Diagnosis: Severe right knee pain with difficulty walking
+Discharge Diagnosis: Right knee osteoarthritis, status after right total knee replacement
+Secondary Diagnoses: High blood pressure; Mild anaemia after surgery
+Consultations: Dr. Ram, Physiotherapy
+Procedures: Right total knee replacement on 01 Oct 2026
+
+HPI:
+67 year old man with 4 years of right knee pain, worse over 6 months, now unable to walk more than 100 metres.
+
+Brief Hospital Course:
+- Knee: Surgery on 01 Oct 2026 went as planned. Drain removed on Day 2. Walking with a walker from Day 2.
+- Blood count: Haemoglobin 13.1 g/dl before surgery and 10.4 g/dl on Day 3, no transfusion needed.
+- Blood pressure: Readings between 130/80 and 142/86 mmHg on usual medicines.
+
+Physical Exam:
+Pulse 80 per minute, BP 134/82 mmHg, temperature 37.0 C. Wound clean and dry, staples in place. Knee bends to 85 degrees.
+
+Pending Lab or Test Results:
+1. X-ray of the right knee on Day 14, report to Dr. Jason.
+2. Haemoglobin blood test in 1 week at Perambur Health Clinic.
+
+Immunizations Given During Admission: None
+
+Discharge Disposition: Home with family
+Diet:
+1. Normal diet.
+
+Discharge Medications:
+1. Paracetamol 650 mg tablet, by mouth, three times daily, for 5 days.
+2. Pantoprazole 40 mg tablet, by mouth, once daily before breakfast, for 14 days.
+3. Enoxaparin 40 mg injection, under the skin, once daily, for 14 days.
+4. Tramadol 50 mg tablet, by mouth, when required for severe pain, up to twice daily, for 5 days.
+
+Discharge Instructions:
+1. Use the walker at all times when walking for 6 weeks.
+2. Change the wound dressing every 48 hours until the staples are removed.
+3. Do the knee bending exercises 3 times a day as taught by the physiotherapist.
+4. Seek immediate care if fever above 38.5 C, increasing redness, wound discharge or calf swelling occurs.
+
+Follow-up Appointments:
+1. Dr. Jason, Orthopedics, Perambur Bone and Joint Clinic, Perambur, Chennai, on 20 Oct 2026 at 11:00 AM for staple removal and wound check. Phone 044-4000-0102.
+2. Dr. Ram, Physiotherapy, Anna Nagar Rehab Centre, Anna Nagar, Chennai, physiotherapy starting 09 Oct 2026 at 9:30 AM, 3 sessions a week. Phone 044-4000-0108.
+
+CC: PCP Dr. Karthikeyan, Perambur Health Clinic

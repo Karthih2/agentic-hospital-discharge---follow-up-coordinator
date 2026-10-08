@@ -1,0 +1,14 @@
+SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data)
+Patient: Lakshmi Narayanan, 68 years
+Discharge date: 12 Nov 2026
+Procedure: Right knee replacement
+
+Advice on discharge:
+1. Review with orthopedic surgeon on 26 Nov 2026.
+2. Tab. Paracetamol 650 mg three times daily for 5 days.
+3. Tab. Pantoprazole 40 mg once daily before breakfast for 14 days.
+4. Refer to physiotherapist for knee exercises.
+5. Change wound dressing every 48 hours until the stitches are removed.
+6. X-ray of the right knee on Day 14.
+7. Use the walker at all times when moving.
+8. Seek immediate care if fever above 38.5 C, increasing redness or calf swelling occurs.

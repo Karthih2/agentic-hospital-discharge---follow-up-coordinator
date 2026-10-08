@@ -1,0 +1,1 @@
+Doctors, patients, providers and locations are created by scripts/seed.py and scripts/demo_run.py. All fictional.

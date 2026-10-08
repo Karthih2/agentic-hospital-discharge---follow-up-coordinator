@@ -1,0 +1,14 @@
+SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data)
+Patient: Ravi Menon, 61 years
+Discharge date: 05 Nov 2026
+Hospital: Sunrise Heart Institute, Chennai
+
+Advice on discharge:
+1. Follow up with cardiologist in 2 weeks.
+2. Tab. Atorvastatin 20 mg once daily at night for 90 days.
+3. Tab. Aspirin 75 mg once daily after food for 30 days.
+4. Lipid profile blood test on Day 10.
+5. Refer to physiotherapist for cardiac rehabilitation.
+6. Keep the chest incision dry and change dressing every 48 hours.
+7. Eat a low salt diet and walk 15 minutes daily.
+8. Seek immediate care if chest pain, breathlessness or swelling of the legs occurs.

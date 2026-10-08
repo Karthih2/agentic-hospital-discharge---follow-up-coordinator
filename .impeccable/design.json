@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T00:00:00Z",
+  "title": "Design System: Follow-up Coordinator",
+  "extensions": {
+    "colorMeta": {
+      "teal": { "role": "primary", "displayName": "Clinic Teal", "canonical": "#0e7c7b", "tonalRamp": ["#052f2f", "#094848", "#0a5c5c", "#0e7c7b", "#3a9c9b", "#5ed6c3", "#a9ebe0", "#eafbf6"] },
+      "teal-deep": { "role": "primary", "displayName": "Deep Teal", "canonical": "#0a5c5c", "tonalRamp": ["#031c1c", "#063a3a", "#0a5c5c", "#0e7c7b", "#3a9c9b", "#7cc0bf", "#b8dede", "#eafbf6"] },
+      "mint": { "role": "secondary", "displayName": "Fresh Mint", "canonical": "#5ed6c3", "tonalRamp": ["#0e4a41", "#1a7b6d", "#2fa996", "#5ed6c3", "#86e2d3", "#aeeee3", "#d3f6f0", "#eafbf6"] },
+      "ground": { "role": "neutral", "displayName": "Mint Paper", "canonical": "#eafbf6", "tonalRamp": ["#a9d9cd", "#bfe5db", "#d3f1e8", "#eafbf6", "#f0fcf9", "#f4fdf9", "#f8fefc", "#fbfffd"] },
+      "ground-deep": { "role": "neutral", "displayName": "Deeper Mint", "canonical": "#d3f1e8", "tonalRamp": ["#7fbcae", "#a9d9cd", "#bfe5db", "#d3f1e8", "#deF5ee", "#e6f8f3", "#eafbf6", "#f4fdf9"] },
+      "tile": { "role": "neutral", "displayName": "Tile Mint", "canonical": "#f4fdf9", "tonalRamp": ["#a9d9cd", "#d3f1e8", "#eafbf6", "#f4fdf9", "#f6fdfa", "#f8fefc", "#fafffd", "#fcfffe"] },
+      "ink": { "role": "neutral", "displayName": "Navy Ink", "canonical": "#14304f", "tonalRamp": ["#0a1828", "#14304f", "#274a6e", "#3d5671", "#667d94", "#92a4b5", "#c1cbd5", "#e6ebf0"] },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#3d5671", "tonalRamp": ["#14304f", "#2a4360", "#3d5671", "#566d86", "#7389a0", "#94a6b8", "#bcc8d4", "#e2e8ee"] },
+      "line": { "role": "neutral", "displayName": "Quiet Line", "canonical": "#a9d9cd", "tonalRamp": ["#5a9a8c", "#7bb8aa", "#a9d9cd", "#bfe5db", "#d3f1e8", "#e0f5ee", "#eafbf6", "#f4fdf9"] },
+      "pending": { "role": "status", "displayName": "Pending Blue", "canonical": "#2f6fde", "tonalRamp": ["#10285a", "#1a3f8a", "#2456b8", "#2f6fde", "#5c8ee6", "#8cb0ee", "#bcd1f6", "#e8effc"] },
+      "done": { "role": "status", "displayName": "Completed Green", "canonical": "#1f7a43", "tonalRamp": ["#0b2e19", "#124a29", "#1a6338", "#1f7a43", "#4a9a68", "#7bb994", "#b0d6bf", "#e4f2ea"] },
+      "review": { "role": "status", "displayName": "Needs Review Orange", "canonical": "#a8530c", "tonalRamp": ["#3d1d04", "#6b3507", "#8a450a", "#a8530c", "#c07a3c", "#d6a374", "#e8cbaf", "#f7ece1"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Landing hero headline only." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings on landing and app screens." },
+      "title": { "displayName": "Title", "purpose": "Brand name, item and card titles." },
+      "body": { "displayName": "Body", "purpose": "All running text at 18px, 68ch max, 1.75 line height for Indic scripts." },
+      "label": { "displayName": "Label", "purpose": "Buttons, status chips, nav links, selects." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "rise-once", "value": "0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0 to 1, translateY 14-18px to 0, once", "purpose": "Only entrance animation; skipped under reduced motion." },
+      { "name": "skeleton-step", "value": "1.4s ease-in-out infinite, background Deeper Mint to Quiet Line", "purpose": "Loading placeholder; static under reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "Teal fill with ink outline; the one main action per view.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Try the demo</button>",
+      "css": ".ds-btn { display:inline-flex; align-items:center; justify-content:center; min-height:3rem; padding:0.55rem 1.4rem; font-family:var(--font-display); font-weight:600; font-size:1.05rem; border:2px solid var(--color-ink); border-radius:4px; cursor:pointer; } .ds-btn-primary { background:var(--color-teal); color:var(--color-ground); } .ds-btn-primary:active { background:var(--color-teal-deep); } .ds-btn:focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }"
+    },
+    {
+      "name": "Plain Button",
+      "kind": "custom",
+      "refersTo": "button-plain",
+      "description": "Tile Mint secondary action such as Sign in.",
+      "html": "<button class=\"ds-btn ds-btn-plain\">Sign in</button>",
+      "css": ".ds-btn { display:inline-flex; align-items:center; justify-content:center; min-height:3rem; padding:0.55rem 1.4rem; font-family:var(--font-display); font-weight:600; font-size:1.05rem; border:2px solid var(--color-ink); border-radius:4px; cursor:pointer; } .ds-btn-plain { background:var(--color-tile); color:var(--color-ink); } .ds-btn-plain:active { background:var(--color-ground-deep); } .ds-btn:focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }"
+    },
+    {
+      "name": "Sticker Tile",
+      "kind": "card",
+      "refersTo": "tile",
+      "description": "Flat Tile Mint container with a 2px ink outline.",
+      "html": "<div class=\"ds-tile\"><strong>Take aspirin daily</strong><p>Morning, with food.</p></div>",
+      "css": ".ds-tile { background:var(--color-tile); border:2px solid var(--color-ink); border-radius:4px; padding:1.25rem; color:var(--color-ink); font-family:var(--font-body); } .ds-tile strong { font-family:var(--font-display); font-size:1.25rem; } .ds-tile p { margin:0.4rem 0 0; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Tile Mint field with 2px ink border.",
+      "html": "<input class=\"ds-field\" placeholder=\"Email address\">",
+      "css": ".ds-field { width:100%; min-height:3rem; padding:0.55rem 0.9rem; background:var(--color-tile); color:var(--color-ink); border:2px solid var(--color-ink); border-radius:4px; font:inherit; box-sizing:border-box; } .ds-field::placeholder { color:var(--color-ink-soft); } .ds-field:focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "status-review",
+      "description": "Solid status colour with white label; Pending, Completed or Needs Review.",
+      "html": "<span class=\"ds-status\">Needs Review</span>",
+      "css": ".ds-status { display:inline-flex; align-items:center; gap:0.4rem; padding:0.1rem 0.6rem; border-radius:4px; font-family:var(--font-display); font-weight:600; font-size:0.85rem; color:#fff; background:var(--color-review); }"
+    },
+    {
+      "name": "Segmented Toggle",
+      "kind": "nav",
+      "refersTo": "button-primary",
+      "description": "48px ink-outlined toggle; selected is teal.",
+      "html": "<div class=\"ds-seg\"><button class=\"ds-on\">Plan</button><button>Family</button></div>",
+      "css": ".ds-seg { display:flex; gap:0.5rem; } .ds-seg button { min-height:3rem; padding:0 1.25rem; border:2px solid var(--color-ink); border-radius:4px; background:var(--color-tile); color:var(--color-ink); font-family:var(--font-display); font-weight:600; cursor:pointer; } .ds-seg .ds-on { background:var(--color-teal); color:var(--color-ground); } .ds-seg button:focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Sticker Sheet",
+    "overview": "The whole product is drawn the way its icon sheet is drawn: flat mint paper, objects outlined in navy ink at 2px, small square corners, status carried by a colour square. Nothing floats, glows or leans. A patient or family member reading a plan in a hospital corridor should find the page calm, legible and plain about what is done, what is pending and what a doctor must review.\n\nThe landing page (Persuade) and the signed-in screens (Operate) share one vocabulary. Landing alternates bands of mint ground, deeper mint and committed teal; app screens stay on the mint ground with tiles. Real content leads. Six scripts are first-class, so type and line height flex for Indic text.",
+    "keyCharacteristics": [
+      "Flat everywhere: no shadows, no gradients, depth from outline weight and tonal bands.",
+      "One ink (navy) for text and every outline; teal is the action and committed-band colour.",
+      "4px corners on every tile, button, field and status chip.",
+      "Status is a solid colour square plus a word, never colour alone.",
+      "The 58 sliced icons from the user's sheet are the only icons.",
+      "Motion is one calm entrance rise; no hover animation."
+    ],
+    "rules": [
+      { "name": "The No-White Rule", "body": "The lightest surface is Tile Mint (#f4fdf9). Pure white appears only as text on a status chip.", "section": "colors" },
+      { "name": "The One Ink Rule", "body": "Text and outlines are Navy Ink. No black, no grey outlines on primary surfaces.", "section": "colors" },
+      { "name": "The Status Trio Rule", "body": "Blue, green and orange mean Pending, Completed, Needs Review and nothing else. Do not reuse them as decoration.", "section": "colors" },
+      { "name": "The Script-Aware Rule", "body": "Every text role must survive Tamil, Hindi, Telugu, Kannada and Malayalam: no negative tracking, no tight line height, no fixed-height text boxes.", "section": "typography" },
+      { "name": "The Flat Sticker Rule", "body": "If a surface needs to stand out, thicken or darken its outline (2px ink, 3 to 4px teal when selected); never add a shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do outline every raised object in 2px Navy Ink with 4px corners.",
+      "Do pair every status colour with a word or icon.",
+      "Do use Tile Mint (#f4fdf9) as the lightest surface and Mint Paper (#eafbf6) as the page.",
+      "Do keep touch targets at 48px or more and body text at 18px.",
+      "Do use only icons from the sliced sheet in frontend/src/assets/icons.",
+      "Do show real content (synthetic sheet, real generated plan, real translations).",
+      "Do use skeleton bars for loading, and honour prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't use gradients, shadows, glows, orbs or dot grids.",
+      "Don't add hover animation or animated arrows; state changes are tone steps.",
+      "Don't use emoji, em dashes or lucide icons.",
+      "Don't use kickers or eyebrow labels above headings.",
+      "Don't build bento grids or rows of feature cards.",
+      "Don't use pure white (#ffffff) as a surface, soft or large corner radii, or rainbow or pastel accents.",
+      "Don't use Pending, Completed or Needs Review colours as decoration."
+    ]
+  }
+}

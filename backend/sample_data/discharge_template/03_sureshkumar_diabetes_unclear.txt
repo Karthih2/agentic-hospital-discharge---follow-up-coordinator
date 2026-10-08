@@ -1,0 +1,53 @@
+SYNTHETIC DISCHARGE SUMMARY (fictional patient, not real data)
+Hospital: Sunrise General Hospital, Chennai (synthetic)
+Patient: Sureshkumar, 58 years, Male    Patient code: PAT-4103
+
+Date of Admission: 02 Oct 2026
+Date of Discharge: 07 Oct 2026
+Attending Physician: Dr. Sanjay, Endocrinology (attending on the day of discharge)
+PCP: Dr. Karthikeyan, Perambur Health Clinic, Perambur, Chennai
+Admission Diagnosis: Very high blood sugar with vomiting
+Discharge Diagnosis: Uncontrolled type 2 diabetes with high blood sugar, resolved
+Secondary Diagnoses: High blood pressure; Raised creatinine, improving
+Consultations: Dr. Jega, Nephrology
+Procedures: None
+
+HPI:
+58 year old man with type 2 diabetes for 10 years, 3 days of thirst, passing urine often and vomiting. Blood sugar at home above 450 mg/dl.
+
+Brief Hospital Course:
+- Blood sugar: 512 mg/dl on admission, no ketoacidosis. Controlled with insulin, now 140 to 190 mg/dl.
+- Kidneys: Creatinine 1.9 mg/dl on admission and 1.4 mg/dl on discharge after fluids.
+- Blood pressure: 150/94 mmHg on admission, 132/84 mmHg at discharge.
+
+Physical Exam:
+Pulse 84 per minute, BP 132/84 mmHg. Alert, well hydrated. Feet: no wounds.
+
+Pending Lab or Test Results:
+1. HbA1c result pending; Dr. Karthikeyan to review the report.
+2. Kidney function blood test (creatinine) on Day 7.
+
+Immunizations Given During Admission: None
+
+Discharge Disposition: Home
+Diet:
+1. Diabetic diet as taught by the dietitian.
+
+Discharge Medications:
+1. Metformin 500 mg tablet, by mouth, twice daily after food, for 30 days.
+2. Metformin 1000 mg tablet, by mouth, once daily.
+3. Stop Glimepiride.
+4. Insulin glargine 10 units injection, under the skin, at bedtime, long-term. Increase by 2 units every 3 days if fasting sugar is above 130 mg/dl.
+5. Amlodipine 5 mg tablet, by mouth, once daily. Continue as advised.
+6. Telmisartan 40 mg tablet, by mouth, once daily in the morning, long-term.
+
+Discharge Instructions:
+1. Check blood sugar before breakfast and before dinner every day and write it down.
+2. Patient question noted at discharge: What should I do if my sugar drops and I feel dizzy?
+3. Seek immediate care if sugar is below 70 mg/dl with confusion, or above 300 mg/dl with vomiting.
+
+Follow-up Appointments:
+1. Follow up soon with Dr. Sanjay, Endocrinology.
+2. Dr. Jega, Nephrology, Kilpauk Kidney Care, Kilpauk, Chennai, on 22 Oct 2026 at 4:00 PM. Phone 044-4000-0109.
+
+CC: PCP Dr. Karthikeyan, Perambur Health Clinic

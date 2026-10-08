@@ -1,0 +1,9 @@
+# MongoDB is Atlas (hosted), so there is no database container. One service: the API.
+# Background jobs (reminders, missed-task alerts, review aging) run inside the API process on a 60 second loop
+# and take a lease in MongoDB first, so you can run several api containers safely.
+services:
+  api:
+    build: .
+    env_file: .env
+    ports: ["8000:8000"]
+    restart: unless-stopped

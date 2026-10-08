@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/bricolage-grotesque/index.css";
+@import "@fontsource/atkinson-hyperlegible/400.css";
+@import "@fontsource/atkinson-hyperlegible/700.css";
+@import "@fontsource/noto-sans-tamil/400.css";
+@import "@fontsource/noto-sans-tamil/700.css";
+@import "@fontsource/noto-sans-devanagari/400.css";
+@import "@fontsource/noto-sans-devanagari/700.css";
+@import "@fontsource/noto-sans-telugu/400.css";
+@import "@fontsource/noto-sans-telugu/700.css";
+@import "@fontsource/noto-sans-kannada/400.css";
+@import "@fontsource/noto-sans-kannada/700.css";
+@import "@fontsource/noto-sans-malayalam/400.css";
+@import "@fontsource/noto-sans-malayalam/700.css";
+
+/* Palette: the user's teal set (#0E7C7B, #5ED6C3, #EAFBF6) joined to the icon sheet's navy ink and status colours. */
+@theme {
+  --color-teal: #0e7c7b;
+  --color-teal-deep: #0a5c5c;
+  --color-mint: #5ed6c3;
+  --color-ground: #eafbf6;
+  --color-ground-deep: #d3f1e8;
+  --color-tile: #f4fdf9;
+  --color-ink: #14304f;
+  --color-ink-soft: #3d5671;
+  --color-line: #a9d9cd;
+  --color-pending: #2f6fde;
+  --color-done: #1f7a43;
+  --color-review: #a8530c;
+
+  --font-display: "Bricolage Grotesque Variable", "Noto Sans Tamil", "Noto Sans Devanagari", "Noto Sans Telugu",
+    "Noto Sans Kannada", "Noto Sans Malayalam", sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Noto Sans Tamil", "Noto Sans Devanagari", "Noto Sans Telugu",
+    "Noto Sans Kannada", "Noto Sans Malayalam", sans-serif;
+
+  --radius-tile: 4px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    font-variant-numeric: tabular-nums;
+    /* long names, phone numbers and Indic words wrap instead of widening the page (inherited by everything) */
+    overflow-wrap: anywhere;
+    overflow-x: clip;
+  }
+  html { overflow-x: clip; }
+
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.02em; line-height: 1.08; }
+  p { text-wrap: pretty; max-width: 68ch; }
+  img { display: block; max-width: 100%; }
+}
+
+/* browser surfaces carry the design */
+::selection { background: var(--color-mint); color: var(--color-ink); }
+:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+* { scrollbar-width: thin; scrollbar-color: var(--color-teal) var(--color-ground-deep); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-ground-deep); }
+::-webkit-scrollbar-thumb { background: var(--color-teal); border: 2px solid var(--color-ground-deep); }
+input, textarea, select { caret-color: var(--color-teal); accent-color: var(--color-teal); }
+a { text-underline-offset: 0.2em; text-decoration-thickness: 2px; }
+
+@layer components {
+  .field { width: 100%; min-width: 0; min-height: 3rem; padding: 0.55rem 0.9rem; background: var(--color-tile); color: var(--color-ink);
+    border: 2px solid var(--color-ink); border-radius: var(--radius-tile); font: inherit; }
+  .field::placeholder { color: var(--color-ink-soft); }
+  textarea.field { min-height: 12rem; resize: vertical; }
+
+/* sticker tile: flat, 2px ink outline like the icon sheet. No shadow, no gradient. */
+  .tile {
+  background: var(--color-tile);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-tile);
+}
+  .tile-quiet {
+  background: var(--color-tile);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-tile);
+}
+
+  .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: 3rem; padding: 0.55rem 1.4rem;
+  font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+  border: 2px solid var(--color-ink); border-radius: var(--radius-tile);
+  cursor: pointer; text-decoration: none; text-align: center; max-width: 100%;
+}
+  .btn-primary { background: var(--color-teal); color: var(--color-ground); }
+  .btn-primary:active { background: var(--color-teal-deep); }
+  .btn-plain { background: var(--color-tile); color: var(--color-ink); }
+  .btn-plain:active { background: var(--color-ground-deep); }
+  .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+  .status {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.1rem 0.6rem; border-radius: var(--radius-tile);
+  font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; color: #fff;
+}
+  .status-pending { background: var(--color-pending); }
+  .status-done { background: var(--color-done); }
+  .status-review { background: var(--color-review); }
+}
+
+/* skeleton loader: a flat bar whose tone steps, no gradient sweep */
+@keyframes skeleton-step { 0%, 100% { background: var(--color-ground-deep); } 50% { background: var(--color-line); } }
+.skeleton { background: var(--color-ground-deep); border-radius: 2px; animation: skeleton-step 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+
+.container-page { width: min(72rem, 100% - 2.5rem); margin-inline: auto; min-width: 0; }
+.container-wide { width: min(80rem, 100% - 2.5rem); margin-inline: auto; min-width: 0; }
+
+/* duotone icons: navy outline, mint fill (the 20% layer of the glyph is repainted solid mint) */
+.duo svg path[opacity="0.2"], .duo svg circle[opacity="0.2"], .duo svg rect[opacity="0.2"] { fill: var(--color-mint); opacity: 1; }
+.duo-on-teal svg path[opacity="0.2"] { fill: var(--color-teal-deep); }
+
+/* script-aware line height: Indic scripts need more room */
+:lang(ta) body, :lang(te) body, :lang(kn) body, :lang(ml) body, :lang(hi) body { line-height: 1.75; }
+:lang(ta) h1, :lang(te) h1, :lang(kn) h1, :lang(ml) h1, :lang(hi) h1,
+:lang(ta) h2, :lang(te) h2, :lang(kn) h2, :lang(ml) h2, :lang(hi) h2 { line-height: 1.3; letter-spacing: 0; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Indic headings are wider per word: shrink the hero heading so one long word fits a 360px screen */
+:lang(ta) h1, :lang(hi) h1, :lang(te) h1, :lang(kn) h1, :lang(ml) h1 { font-size: clamp(1.7rem, 7vw, 3.6rem) !important; }
+h1 > div, h1 .split-word { overflow-wrap: anywhere; }
