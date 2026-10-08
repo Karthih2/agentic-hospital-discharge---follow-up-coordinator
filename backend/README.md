@@ -14,7 +14,7 @@ python -m scripts.seed_demo --reset        # wipes data/discharge.db, loads peop
 python -m scripts.seed_demo --reset --publish   # same, and each matched doctor publishes their plan (demo shortcut)
 uvicorn app.main:app --port 8000
 python -m scripts.dev_server               # in-memory demo on :8000, no model calls (add --publish to skip review)
-python -m pytest                           # 154 tests, in-memory SQLite, no network
+python -m pytest                              # 154 tests, in-memory SQLite, no network
 python -m scripts.db_check                 # opens the file, lists tables, encrypted round trip, unique-key check
 python -m scripts.verify_samples [--live | --rules]   # pipeline vs sample_data/discharge_template/expected.json
 ```
