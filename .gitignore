@@ -1,7 +1,13 @@
 .env
 *.env
 !.env.example
+.impeccable/
 __pycache__/
 .pytest_cache/
 .venv/
 uploads_tmp/
+
+.playwright-mcp/
+node_modules/
+dist/
+*.log
