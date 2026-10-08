@@ -11,6 +11,8 @@ import re
 import sys
 
 os.environ.setdefault("SKIP_INIT", "1")
+os.environ.setdefault("JWT_SECRET", "t" * 48)
+os.environ.setdefault("FIELD_ENC_KEY", "7jcwPKyFOEvZ7Lm3PlxzQO4Xrh3CCP6Qrmpuf1/DycY=")
 
 import uvicorn  # noqa: E402
 from mongomock_motor import AsyncMongoMockClient  # noqa: E402
@@ -35,8 +37,9 @@ async def fake_simplify(source_line, lang):
 
 async def reference_extract(raw):
     cases = json.loads((seed_demo.DIR / "expected.json").read_text(encoding="utf-8"))
+    raw_flat = " ".join(raw.split())
     for case in cases:
-        if all(e["source_line"] in raw for e in case["items"][:3]):
+        if all(" ".join(e["source_line"].split()) in raw_flat for e in case["items"][:3]):
             return Outcome(discharge_date_text=case["discharge_date"], items=[
                 ExtractedItem(type=e["type"], source_line=e["source_line"], **e["reference_extraction"])
                 for e in case["items"]])
